@@ -6,6 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../res/layui/css/layui.css">
 	<link rel="stylesheet" href="../res/static/css/mian.css">
+	<link rel="stylesheet" type="text/css" href="../css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jq22-demo.css">
+	<link rel="stylesheet" href="../css/style.css" media="screen" />
 </head>
 <body class="lay-blog">
 		<div class="header">
@@ -53,30 +56,152 @@
 						<!--<h4 class="item-title">
 							<p><i class="layui-icon layui-icon-speaker"></i>公告：<span>欢迎来到我的轻博客</span></p>
 						</h4> -->
-						<div class="item">
+						<!-- 时间轴图片轮播区 -->
+						<div class="item" style="margin:0;padding:0;">
 							<div class="item-box  layer-photos-demo1 layer-photos-demo">
-								<h3><a href="details.html">拥有诗意的心态,才能拥有诗意的生活</a></h3>
-								<h5>发布于：<span>刚刚</span></h5>
-								<p>父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山人海去看更广阔的天空，那个时候期望自己有一双翅膀，能够像鸟儿一样飞得高，看得远。虽然父亲有时会和自己开玩笑，但在做错事的时候会受到严厉的训斥。父亲有双粗糙的大手掌，手把手教我走路、骑车，却会在该放手的时刻果断地放开让自己去大胆尝试，那个时候期望快快长大，能够做自己想做的事，不用受父亲的“控制”。父亲是智慧树，他无所不知、无所不晓，虽然你有十万个为什么，但是也难不倒他。</p>
-								<img src="../res/static/images/item.png" alt="">
-							</div>
-							<div class="comment count">
-								<a href="details.html#comment">评论</a>
-								<a href="javascript:;" class="like">点赞</a>
+								<section class="jq22-container">
+									<div id="timeline">
+										<ul id="dates">
+											<li><a href="#2019">现在</a></li>
+											<li><a href="#221">公元前221</a></li>
+											<li><a href="#207">公元前206</a></li>
+											<li><a href="#220">220.12.10</a></li>
+											<li><a href="#266">266.2.8</a></li>
+											<li><a href="#316">316</a></li>
+											<li><a href="#420">420</a></li>
+											<li><a href="#581">581</a></li>
+											<li><a href="#618">618</a></li>
+											<!--<li><a href="#907">907</a></li>-->
+											<li><a href="#960">960.2.4</a></li>
+											<li><a href="#1127">1127.3.30</a></li>
+											<li><a href="#1279">1279.3.19</a></li>
+											<li><a href="#1368">1368.9.14</a></li>
+											<li><a href="#1644">1644.4.25</a></li>
+											<li><a href="#1912">1912.2.12</a></li>
+											<li><a href="#1949">1949.10.1</a></li>
+										</ul>
+										<ul id="issues" >
+											<li id="1949">
+												<img src="../images/16-新中国.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="221" >
+												<img src="../images/1-秦朝.jpg" style="z-index:1;"/>
+												<input type="text value="124215" style="position:absolute;left:100px;top:100px">
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="207">
+												<img src="../images/2-西汉.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="220">
+												<img src="../images/3-三国.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="266">
+												<img src="../images/4-西晋.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>	
+											<li id="316">
+												<img src="../images/5-东晋.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>					
+											<li id="420">
+												<img src="../images/6-南北朝.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="581">
+												<img src="../images/7-隋朝.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="618">
+												<img src="../images/8-唐朝.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<!--<li id="907">
+												<img src="../images/.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>		-->		
+											<li id="960">
+												<img src="../images/9-北宋.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="1127">
+												<img src="../images/10-南宋.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="1279">
+												<img src="../images/11-元.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="1368">
+												<img src="../images/12-明.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="1644">
+												<img src="../images/13-清.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="1912">
+												<img src="../images/14-中华民国.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+											<li id="1949">
+												<img src="../images/16-新中国.jpg"  />
+												<h1></h1>
+												<p></p>
+											</li>
+										</ul>
+										<div id="grad_left"></div>
+										<div id="grad_right"></div>
+										<a href="#" id="next">+</a>
+										<a href="#" id="prev">-</a>
+									</div>
+								</section>
 							</div>
 						</div>
+						
+						<!-- 视频播放区 -->
+						<div class="item">
+							<div class="item-box  layer-photos-demo2 layer-photos-demo">
+								
+							</div>
+						</div>
+						
+						<!-- 历史信息区 -->
 						<div class="item">
 							<div class="item-box  layer-photos-demo2 layer-photos-demo">
 								<h3><a href="details.html">拥有诗意的心态,才能拥有诗意的生活</a></h3>
 								<h5>发布于：<span>刚刚</span></h5>
 								<p>父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山人海去看更广阔的天空，那个时候期望自己有一双翅膀，能够像鸟儿一样飞得高，看得远。虽然父亲有时会和自己开玩笑，但在做错事的时候会受到严厉的训斥。父亲有双粗糙的大手掌，手把手教我走路、骑车，却会在该放手的时刻果断地放开让自己去大胆尝试，那个时候期望快快长大，能够做自己想做的事，不用受父亲的“控制”。父亲是智慧树，他无所不知、无所不晓，虽然你有十万个为什么，但是也难不倒他。</p>
 								<img src="../res/static/images/item.png" alt="">
-							</div>
-							<div class="comment count">
-								<a href="details.html#comment">评论</a>
-								<a href="javascript:;" class="like">点赞</a>
+							</div>							
+						</div>
+						
+						<!-- 讨论区 -->
+						<div class="item">
+							<div class="item-box  layer-photos-demo2 layer-photos-demo">
+							
 							</div>
 						</div>
+						
+						<!-- 模板 -->
 						<div class="item">
 							<div class="item-box  layer-photos-demo3 layer-photos-demo">
 								<h3><a href="details.html">拥有诗意的心态,才能拥有诗意的生活</a></h3>
@@ -108,6 +233,16 @@
 		layui.config({
 		  base: '../res/static/js/' 
 		}).use('blog');	
+	</script>
+	<script src="../js/jquery-1.11.0.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
+	<script src="../js/jquery.timelinr-0.9.6.js"></script>
+	<script>
+		$(function(){
+			$().timelinr({
+				arrowKeys: 'true'
+			})
+		});
 	</script>
 </body>
 </html>
