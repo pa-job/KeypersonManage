@@ -130,7 +130,7 @@ h1,h2,h4,h5,h6 {
 				}
 				#issues li input {
 					position:absolute;
-					opacity: 0;			
+					/*opacity: 0;		*/	
 				}
 		
 		#grad_left,

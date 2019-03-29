@@ -97,7 +97,7 @@ $(function(){
 				    	 layer.msg('请求失败');
 				     }		       
 				});
-				var viewurl = ipPort + '/view', vdata = $(this).attr('areaid');
+				var viewurl = ipPort + '/view', vdata = $(this).attr('value');
 				console.log( this);
 				console.log( vdata);
 				$.ajax({
@@ -111,8 +111,8 @@ $(function(){
 				 		if( jsonData ){
 				 			var data = jsonData.data;
 				 			if( jsonData.state == 0 && data ){
-				 				$( '#viewDetail source' ).empty();
-								$( '#viewDetail source' ).attr( 'src', data.viewUrl );
+				 				$( '#viewDetail video' ).empty();
+								$( '#viewDetail video' ).append('<source src="' + data.viewUrl + '" type="video/webm">');
 				 			}else{
 				 				console.log( jsonData.message);
 				 			}		

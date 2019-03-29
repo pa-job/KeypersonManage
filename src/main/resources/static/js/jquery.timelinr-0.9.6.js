@@ -152,7 +152,7 @@ jQuery.fn.timelinr = function(options){
 				$.ajax({
 				     type : "GET",
 				     url : viewurl,
-				     data : {"id":vdata},
+				     data : {"id":vdata.substring(1,data.length)},
 				     cache : true,
 				     contentType : "application/x-www-form-urlencoded",
 				     dataType : "json",
