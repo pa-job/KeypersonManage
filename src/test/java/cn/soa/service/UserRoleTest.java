@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import cn.soa.HistoryMapApplication;
 import cn.soa.dao.UserRoleMapper;
-import cn.soa.entity.AuthInfo;
 import cn.soa.service.inter.RoleServiceInter;
 
 @RunWith(SpringRunner.class)
@@ -20,12 +19,6 @@ public class UserRoleTest {
 	@Autowired
 	public RoleServiceInter roleServiceInter;
 	
-	@Test
-	public void findAuthByRolidServ() {
-//		String rolid = "77A987B996C744EFAEC54B5855F7C98E";
-		String rolid = "42ba62c1a1414d7491eb05338d14c1c3";
-		ArrayList<AuthInfo> findAuthByRolidServ = roleServiceInter.findAuthByRolidServ(rolid);
-		System.out.println(findAuthByRolidServ);
-	}
+
 		
 }

@@ -44,7 +44,7 @@ h1,h2,h4,h5,h6 {
 
 	#timeline {
 		width: 900px;
-		height: 750px;
+		height: 550px;
 		overflow: hidden;
 		margin: 0 auto;
 		position: relative;
@@ -76,13 +76,13 @@ h1,h2,h4,h5,h6 {
 		#issues {
 			margin-top: 20px;
 			width: 800px;
-			height: 650px;
+			height: 450px;
 			overflow: hidden;
 		}	
 			#issues li {
 				position:relative;
-				width: 900px;
-				height: 600px;
+				width: 800px;
+				height: 450px;
 				list-style: none;
 				float: left;
 			}
@@ -94,7 +94,11 @@ h1,h2,h4,h5,h6 {
 				    transform: scale(1.1,1.1);
 				}
 				#issues li img {
+				
 					float: left;
+					width:800px;
+					height:450px;
+					/*margin: 10px 30px 10px 50px;*/
 					margin: 10px 30px 10px 50px;
 					background: transparent;
 					-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)"; /* IE 8 */   
@@ -123,6 +127,10 @@ h1,h2,h4,h5,h6 {
 					font-weight: normal;
 					line-height: 22px;
 					text-shadow: #000 1px 1px 2px;
+				}
+				#issues li input {
+					position:absolute;
+					
 				}
 		
 		#grad_left,

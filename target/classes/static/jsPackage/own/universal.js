@@ -22,7 +22,6 @@ layui.form.verify({
 	}
 })
 */
-
 /**
  * js生成html(重写)
  * wholePageHtml--输出全部的html代码

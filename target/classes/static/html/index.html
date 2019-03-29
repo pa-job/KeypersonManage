@@ -4,11 +4,11 @@
 	<meta charset="UTF-8">
 	<title>历史时间</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../res/layui/css/layui.css">
-	<link rel="stylesheet" href="../res/static/css/mian.css">
 	<link rel="stylesheet" type="text/css" href="../css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="../css/jq22-demo.css">
 	<link rel="stylesheet" href="../css/style.css" media="screen" />
+	<link rel="stylesheet" href="../jsPackage/layui-v2.4.5/css/layui.css">
+	<link rel="stylesheet" href="../res/static/css/mian.css">
 </head>
 <body class="lay-blog">
 		<div class="header">
@@ -22,7 +22,7 @@
 				</h1>
 				<form class="layui-form blog-seach pull-left" action="">
 					<div class="layui-form-item blog-sewrap">
-					    <div class="layui-input-block blog-sebox">
+					    <div class="layui-input-block blog-sebox" id="searchMap">
 					      <i class="layui-icon layui-icon-search"></i>
 					      <input type="text" name="title" lay-verify="title" autocomplete="off"  class="layui-input">
 					    </div>
@@ -31,11 +31,11 @@
 				<div class="blog-nav pull-right">
 					<ul class="layui-nav pull-left">
 					  <!-- <li class="layui-nav-item layui-this"><a href="index.html">首页</a></li> -->
-					  <li class="layui-nav-item"><a href="message.html">登录/注册</a></li>
+					  <li class="layui-nav-item"><a href="#">登录/注册</a></li>
 					  <!-- <li class="layui-nav-item"><a href="about.html">关于</a></li> -->
 					</ul>
 					<a href="#" class="personal pull-left">
-						<i class="layui-icon layui-icon-username" style="color:red">测试</i>
+						<i class="layui-icon layui-icon-username" id="userName" style="color:red">测试</i>
 					</a>
 				</div>
 				<div class="mobile-nav pull-right" id="mobile-nav">
@@ -57,73 +57,127 @@
 							<p><i class="layui-icon layui-icon-speaker"></i>公告：<span>欢迎来到我的轻博客</span></p>
 						</h4> -->
 						<!-- 时间轴图片轮播区 -->
-						<div class="item" style="margin:0;padding:0;">
+						<div class="item" id="timePicShow">
 							<div class="item-box  layer-photos-demo1 layer-photos-demo">
 								<section class="jq22-container">
 									<div id="timeline">
 										<ul id="dates">
-											<li><a href="#2019">现在</a></li>
-											<li><a href="#221">公元前221</a></li>
-											<li><a href="#207">公元前206</a></li>
-											<li><a href="#220">220.12.10</a></li>
-											<li><a href="#266">266.2.8</a></li>
-											<li><a href="#316">316</a></li>
-											<li><a href="#420">420</a></li>
-											<li><a href="#581">581</a></li>
-											<li><a href="#618">618</a></li>
+											<li><a id="a2019" href="#2019">现在</a></li>
+											<li><a id="a221" href="#221">公元前221</a></li>
+											<li><a id="a207" href="#207">公元前206</a></li>
+											<li><a id="a220" href="#220">220.12.10</a></li>
+											<li><a id="a266" href="#266">266.2.8</a></li>
+											<li><a id="a316" href="#316">316</a></li>
+											<li><a id="a420" href="#420">420</a></li>
+											<li><a id="a581" href="#581">581</a></li>
+											<li><a id="a618" href="#618">618</a></li>
 											<!--<li><a href="#907">907</a></li>-->
-											<li><a href="#960">960.2.4</a></li>
-											<li><a href="#1127">1127.3.30</a></li>
-											<li><a href="#1279">1279.3.19</a></li>
-											<li><a href="#1368">1368.9.14</a></li>
-											<li><a href="#1644">1644.4.25</a></li>
-											<li><a href="#1912">1912.2.12</a></li>
-											<li><a href="#1949">1949.10.1</a></li>
+											<li><a id="a960" href="#960">960.2.4</a></li>
+											<li><a id="a1127" href="#1127">1127.3.30</a></li>
+											<li><a id="a1279" href="#1279">1279.3.19</a></li>
+											<li><a id="a1368" href="#1368">1368.9.14</a></li>
+											<li><a id="a1644" href="#1644">1644.4.25</a></li>
+											<li><a id="a1912" href="#1912">1912.2.12</a></li>
+											<li><a id="a1949" href="#1949">1949.10.1</a></li>
 										</ul>
 										<ul id="issues" >
 											<li id="1949">
+												<label style="display:none">新中国、中国、北京、京、天津、津、河北、冀、山西、晋、内蒙古、蒙、辽宁、辽、吉林、吉、黑龙江、黑、上海、沪、江苏、苏、浙江、浙、安徽、皖、福建、闽、江西、赣、山东、鲁、
+													河南、豫、湖北、鄂、湖南、湘、广东、粤、广西、桂、海南、琼、重庆、渝、四川、川、贵州、黔、云南、滇、西藏、藏、陕西、陕、甘肃、甘、青海、青、宁夏、宁、新疆、新、
+													台湾、台、香港、港、澳门、澳
+												</label>
 												<img src="../images/16-新中国.jpg"  />
+												<input type="text" name="pos" id="新疆" value="1" style="left:83px;top:85px;width:182px;height:110px">
+												<input type="text" name="pos" id="西藏" value="2" style="left:127px;top:261px;width:152px;height:66px">
+												<input type="text" name="pos" id="青海" value="3" style="left:249px;top:207px;width:112px;height:46px">
+												<input type="text" name="pos" id="甘肃" value="4" style="left:393px;top:240px;width:46px;height:31px">
+												<input type="text" name="pos" id="宁夏" value="5" style="left:417px;top:210px;width:33px;height:22px">
+												<input type="text" name="pos" id="陕西" value="6" style="left:463px;top:210px;width:22px;height:63px">
+												<input type="text" name="pos" id="山西" value="7" style="left:500px;top:198px;width:23px;height:48px">
+												<input type="text" name="pos" id="内蒙古" value="8" style="left:403px;top:160px;width:99px;height:38px">
+												<input type="text" name="pos" id="陕西" value="9" style="left:530px;top:204px;width:21px;height:31px">
+												<input type="text" name="pos" id="北京" value="1" style="left:540px;top:180px;width:28px;height:16px">
+1												<input type="text" name="pos" id="辽宁" value="11" style="left:590px;top:152px;width:61px;height:31px">
+												<input type="text" name="pos" id="吉林" value="124215" style="left:608px;top:121px;width:80px;height:31px">
+												<input type="text" name="pos" id="黑龙江" value="124215" style="left:630px;top:60px;width:89px;height:57px">
+												<input type="text" name="pos" id="山东" value="124215" style="left:554px;top:216px;width:63px;height:25px">
+												<input type="text" name="pos" id="江苏" value="124215" style="left:582px;top:250px;width:54px;height:23px">
+												<input type="text" name="pos" id="上海" value="124215" style="left:610px;top:278px;width:62px;height:16px">
+												<input type="text" name="pos" id="浙江" value="124215" style="left:588px;top:303px;width:46px;height:21px">
+												<input type="text" name="pos" id="福建" value="124215" style="left:574px;top:329px;width:22px;height:41px">
+												<input type="text" name="pos" id="台湾" value="124215" style="left:615px;top:355px;width:22px;height:40px">
+												<input type="text" name="pos" id="河南" value="124215" style="left:502px;top:255px;width:44px;height:17px">
+												<input type="text" name="pos" id="湖北" value="124215" style="left:494px;top:290px;width:54px;height:20px">
+												<input type="text" name="pos" id="湖南" value="124215" style="left:482px;top:320px;width:46px;height:30px">
+												<input type="text" name="pos" id="广东" value="124215" style="left:514px;top:370px;width:55px;height:14px">
+												<input type="text" name="pos" id="澳门" value="124215" style="left:508px;top:394px;width:37px;height:17px">
+												<input type="text" name="pos" id="香港" value="124215" style="left:547px;top:384px;width:43px;height:19px">
+												<input type="text" name="pos" id="海南" value="124215" style="left:464px;top:422px;width:71px;height:19px">
+												<input type="text" name="pos" id="广西" value="124215" style="left:438px;top:366px;width:57px;height:28px">
+												<input type="text" name="pos" id="云南" value="124215" style="left:332px;top:358px;width:69px;height:31px">
+												<input type="text" name="pos" id="四川" value="124215" style="left:358px;top:270px;width:58px;height:45px">
+												<input type="text" name="pos" id="贵州" value="124215" style="left:417px;top:332px;width:49px;height:22px">
+												<input type="text" name="pos" id="重庆" value="124215" style="left:427px;top:302px;width:44px;height:17px">
+												<input type="text" name="pos" id="江西" value="124215" style="left:538px;top:318px;width:20px;height:41px">
+												<input type="text" name="pos" id="安徽" value="124215" style="left:560px;top:265px;width:18px;height:40px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="221" >
+												<label style="display:none">秦朝、咸阳</label>
 												<img src="../images/1-秦朝.jpg" style="z-index:1;"/>
-												<input type="text value="124215" style="position:absolute;left:100px;top:100px">
+												<input type="text" name="pos" id="咸阳" value="124215" style="left:464px;top:241px;width:60px;height:60px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="207">
+												<label style="display:none">西汉、汉、东汉、洛阳</label>
 												<img src="../images/2-西汉.jpg"  />
+												<input type="text" name="pos" id="洛阳"  value="124215" style="left:505px;top:263px;width:73px;height:26px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="220">
+												<label style="display:none">三国、蜀、魏、吴、蜀国、魏国、吴国、成都、许都、公安、武昌、建业</label>
 												<img src="../images/3-三国.jpg"  />
+												<input type="text" name="pos" id="成都"  value="124215" style="left:420px;top:312px;width:49px;height:22px">
+												<input type="text" name="pos" id="建业"  value="124215" style="left:567px;top:314px;width:49px;height:35px">
+												<input type="text" name="pos" id="许都"  value="124215" style="left:522px;top:243px;width:29px;height:50px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="266">
+												<label style="display:none">西晋、洛阳</label>
 												<img src="../images/4-西晋.jpg"  />
+												<input type="text" name="pos" id="洛阳"  value="124215" style="left:592px;top:329px;width:82px;height:31px">
 												<h1></h1>
 												<p></p>
 											</li>	
 											<li id="316">
+												<label style="display:none">东晋、长安</label>
 												<img src="../images/5-东晋.jpg"  />
+												<input type="text" name="pos" id="长安"  value="124215" style="left:546px;top:305px;width:97px;height:32px">
 												<h1></h1>
 												<p></p>
 											</li>					
 											<li id="420">
+												<label style="display:none">南北朝、长安</label>
 												<img src="../images/6-南北朝.jpg"  />
+												
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="581">
+												<label style="display:none">隋朝、隋、洛阳</label>
 												<img src="../images/7-隋朝.jpg"  />
+												<input type="text" name="pos" id="洛阳"  value="124215" style="left:583px;top:312px;width:50px;height:43px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="618">
+												<label style="display:none">唐朝、唐、大兴城、洛阳</label>
 												<img src="../images/8-唐朝.jpg"  />
+												<input type="text" name="pos" id="长安"  value="124215" style="left:546px;top:222px;width:76px;height:81px">
 												<h1></h1>
 												<p></p>
 											</li>
@@ -133,37 +187,84 @@
 												<p></p>
 											</li>		-->		
 											<li id="960">
+												<label style="display:none">北宋、汴梁</label>
 												<img src="../images/9-北宋.jpg"  />
+												<input type="text" name="pos" id="汴梁"  value="124215" style="left:526px;top:327px;width:80px;height:49px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="1127">
+												<label style="display:none">南宋、余杭</label>
 												<img src="../images/10-南宋.jpg"  />
+												<input type="text" name="pos" id="余杭"  value="124215" style="left:526px;top:285px;width:100px;height:38px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="1279">
+												<label style="display:none">元、元朝、临安</label>
 												<img src="../images/11-元.jpg"  />
+												<input type="text" name="pos" id="临安"  value="124215" style="left:509px;top:258px;width:100px;height:76px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="1368">
+												<label style="display:none">明、明朝、建康、北平</label>
 												<img src="../images/12-明.jpg"  />
+												<input type="text" name="pos" id="建康"  value="124215" style="left:549px;top:206px;width:65px;height:65px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="1644">
+												<label style="display:none">清、清朝、北京</label>
 												<img src="../images/13-清.jpg"  />
+												<input type="text" name="pos" id="北京"  value="124215" style="left:539px;top:172px;width:91px;height:65px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="1912">
+												<label style="display:none">中华民国、民国、南京</label>
 												<img src="../images/14-中华民国.jpg"  />
+												<input type="text" name="pos" id="南京"  value="124215" style="left:598px;top:252px;width:88px;height:58px">
 												<h1></h1>
 												<p></p>
 											</li>
 											<li id="1949">
+												<label style="display:none">中国、新中国、北京</label>
 												<img src="../images/16-新中国.jpg"  />
+												<input type="text" name="pos" id="新疆" value="124215" style="left:83px;top:85px;width:182px;height:110px">
+												<input type="text" name="pos" id="西藏" value="124215" style="left:127px;top:261px;width:152px;height:66px">
+												<input type="text" name="pos" id="青海" value="124215" style="left:249px;top:207px;width:112px;height:46px">
+												<input type="text" name="pos" id="甘肃" value="124215" style="left:393px;top:240px;width:46px;height:31px">
+												<input type="text" name="pos" id="宁夏" value="124215" style="left:417px;top:210px;width:33px;height:22px">
+												<input type="text" name="pos" id="陕西" value="124215" style="left:463px;top:210px;width:22px;height:63px">
+												<input type="text" name="pos" id="山西" value="124215" style="left:500px;top:198px;width:23px;height:48px">
+												<input type="text" name="pos" id="内蒙古" value="124215" style="left:403px;top:160px;width:99px;height:38px">
+												<input type="text" name="pos" id="陕西" value="124215" style="left:530px;top:204px;width:21px;height:31px">
+												<input type="text" name="pos" id="北京" value="124215" style="left:540px;top:180px;width:28px;height:16px">
+												<input type="text" name="pos" id="天津" value="124215" style="left:560px;top:198px;width:51px;height:15px">
+												<input type="text" name="pos" id="辽宁" value="124215" style="left:590px;top:152px;width:61px;height:31px">
+												<input type="text" name="pos" id="吉林" value="124215" style="left:608px;top:121px;width:80px;height:31px">
+												<input type="text" name="pos" id="黑龙江" value="124215" style="left:630px;top:60px;width:89px;height:57px">
+												<input type="text" name="pos" id="山东" value="124215" style="left:554px;top:216px;width:63px;height:25px">
+												<input type="text" name="pos" id="江苏" value="124215" style="left:582px;top:250px;width:54px;height:23px">
+												<input type="text" name="pos" id="上海" value="124215" style="left:610px;top:278px;width:62px;height:16px">
+												<input type="text" name="pos" id="浙江" value="124215" style="left:588px;top:303px;width:46px;height:21px">
+												<input type="text" name="pos" id="福建" value="124215" style="left:574px;top:329px;width:22px;height:41px">
+												<input type="text" name="pos" id="台湾" value="124215" style="left:615px;top:355px;width:22px;height:40px">
+												<input type="text" name="pos" id="河南" value="124215" style="left:502px;top:255px;width:44px;height:17px">
+												<input type="text" name="pos" id="湖北" value="124215" style="left:494px;top:290px;width:54px;height:20px">
+												<input type="text" name="pos" id="湖南" value="124215" style="left:482px;top:320px;width:46px;height:30px">
+												<input type="text" name="pos" id="广东" value="124215" style="left:514px;top:370px;width:55px;height:14px">
+												<input type="text" name="pos" id="澳门" value="124215" style="left:508px;top:394px;width:37px;height:17px">
+												<input type="text" name="pos" id="香港" value="124215" style="left:547px;top:384px;width:43px;height:19px">
+												<input type="text" name="pos" id="海南" value="124215" style="left:464px;top:422px;width:71px;height:19px">
+												<input type="text" name="pos" id="广西" value="124215" style="left:438px;top:366px;width:57px;height:28px">
+												<input type="text" name="pos" id="云南" value="124215" style="left:332px;top:358px;width:69px;height:31px">
+												<input type="text" name="pos" id="四川" value="124215" style="left:358px;top:270px;width:58px;height:45px">
+												<input type="text" name="pos" id="贵州" value="124215" style="left:417px;top:332px;width:49px;height:22px">
+												<input type="text" name="pos" id="重庆" value="124215" style="left:427px;top:302px;width:44px;height:17px">
+												<input type="text" name="pos" id="江西" value="124215" style="left:538px;top:318px;width:20px;height:41px">
+												<input type="text" name="pos" id="安徽" value="124215" style="left:560px;top:265px;width:18px;height:40px">
 												<h1></h1>
 												<p></p>
 											</li>
@@ -180,24 +281,30 @@
 						<!-- 视频播放区 -->
 						<div class="item">
 							<div class="item-box  layer-photos-demo2 layer-photos-demo">
-								
+								<div style="width:600px;height:500px;margin:0 auto">
+									<video controls="controls" style="width:600px;height:500px">
+										<source src="../vedio/VID_20180620_223744.mp4" type="video/webm">
+									</video>
+								</div>								
+							</div>
+							<div class="comment count">
+								<a href="" id="uploadVideo">上传视频</a>
+								<a href="javascript:;" class="like"></a>
 							</div>
 						</div>
+												
 						
 						<!-- 历史信息区 -->
-						<div class="item">
+						<div class="item" id="historyDetail">
 							<div class="item-box  layer-photos-demo2 layer-photos-demo">
-								<h3><a href="details.html">拥有诗意的心态,才能拥有诗意的生活</a></h3>
-								<h5>发布于：<span>刚刚</span></h5>
-								<p>父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山人海去看更广阔的天空，那个时候期望自己有一双翅膀，能够像鸟儿一样飞得高，看得远。虽然父亲有时会和自己开玩笑，但在做错事的时候会受到严厉的训斥。父亲有双粗糙的大手掌，手把手教我走路、骑车，却会在该放手的时刻果断地放开让自己去大胆尝试，那个时候期望快快长大，能够做自己想做的事，不用受父亲的“控制”。父亲是智慧树，他无所不知、无所不晓，虽然你有十万个为什么，但是也难不倒他。</p>
-								<img src="../res/static/images/item.png" alt="">
+								<p style="color:#666666"></p>					
 							</div>							
 						</div>
 						
 						<!-- 讨论区 -->
 						<div class="item">
 							<div class="item-box  layer-photos-demo2 layer-photos-demo">
-							
+								
 							</div>
 						</div>
 						
@@ -227,16 +334,18 @@
 				<span>MIT license</span>
 			</p>
 			<p><span>人生就是一场修行</span></p>
-		</div>
-	<script src="../res/layui/layui.js"></script>
+		</div>				
+	<script src="../jsPackage/layui-v2.4.5/layui.all.js"></script>	
+	<script src="../js/micro_userManager.js"></script>		
+	<script src="../js/jquery-1.11.0.min.js"></script>
+	<script src="../js/jquery.timelinr-0.9.6.js"></script>	
+	<script src="../jsPackage/own/universal.js"></script>
+	<script src="../js/index.js"></script>
 	<script>
 		layui.config({
 		  base: '../res/static/js/' 
 		}).use('blog');	
 	</script>
-	<script src="../js/jquery-1.11.0.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
-	<script src="../js/jquery.timelinr-0.9.6.js"></script>
 	<script>
 		$(function(){
 			$().timelinr({
@@ -245,4 +354,8 @@
 		});
 	</script>
 </body>
+<div class="layui-upload" id="uploadDom" style="display:none">
+	<button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+	<button type="button" class="layui-btn" id="test9">开始上传</button>
+</div>
 </html>

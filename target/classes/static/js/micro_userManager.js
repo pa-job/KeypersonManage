@@ -5,4 +5,4 @@ var ip = "localhost";
 var port = "8080";
 
 
-var ipPort = "http://" + ip + ":" + port + "/EquipmentManage";
+var ipPort = "http://" + ip + ":" + port + "/HistoryMap";

@@ -11,11 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import cn.soa.HistoryMapApplication;
-import cn.soa.dao.UserInfoMapper;
-import cn.soa.dao.UserMapper;
-import cn.soa.dao.UserRoleMapper;
-import cn.soa.entity.AuthInfo;
-import cn.soa.service.inter.RoleServiceInter;
 import cn.soa.service.inter.UserServiceInter;
 
 @RunWith(SpringRunner.class)

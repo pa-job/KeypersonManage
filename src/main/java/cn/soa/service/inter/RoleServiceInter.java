@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import cn.soa.entity.AuthInfo;
 import cn.soa.entity.IotUserModuleResource;
 import cn.soa.entity.UserOrganization;
 import cn.soa.entity.UserRole;
@@ -50,15 +49,6 @@ public interface RoleServiceInter {
 	 * @return List
 	 */
 	public List<Map<String ,Object>> queryUsersByRold(@Param("ROLID") String ROLID );
-
-	/**   
-	 * @Title: findAuthByRolidServ   
-	 * @Description: 根据用户角色id查询用户具有的权限      
-	 * @param: @param rolid
-	 * @param: @return      
-	 * @return: ArrayList<AuthInfo>        
-	 */  
-	ArrayList<AuthInfo> findAuthByRolidServ(String rolid);
 
     /**
 	 * @Title: queryUsersByRold 

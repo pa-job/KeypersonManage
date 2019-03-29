@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.soa.entity.AuthInfo;
 import cn.soa.entity.IotUserModuleResource;
 import cn.soa.entity.UserInfo;
 import cn.soa.entity.UserOrganization;
@@ -273,47 +272,6 @@ public class UserController {
 		logger.debug("-----C------- 修改用户状态   ---- usernum： " + usernum);
 		return null;
 	}
-	
-	/**   
-	 * @Title: getAuthByRolid   
-	 * @Description: 查询用户的模块菜单权限  
-	 * @param: @return      
-	 * @return: ResultJson<List<AuthInfo>>        
-	 */  
-	@GetMapping("/role/auths")
-	public ResultJson<List<AuthInfo>> getAuthByRolid(){
-		logger.debug("-----C------- 查询用户的模块菜单权限     ---- usernum： ");
-		/*
-		 * 获取角色 
-		 */
-		String rolid = null;
-		String usernum =  GlobalUtil.getCookie("num");
-		logger.debug("--C-----查询用户的模块菜单权限  :-----------usernum:" + usernum.substring( 1, usernum.length()-1 ));
-		List<UserRole> userRoles = roleService.getUserRoleByNum(usernum.substring( 1, usernum.length()-1 ));		
-		logger.debug("--C-----查询用户的模块菜单权限  :-----------userRoles:" + userRoles );
-		//暂假定一个用户一个角色
-		if( userRoles != null && userRoles.get(0) != null ) {
-			rolid = userRoles.get(0).getRolid();
-		}
-		logger.debug("--C-----查询用户的模块菜单权限  :-----------rolid:" + rolid );
-		if( rolid == null ) {
-			logger.debug( "---C---- 用户角色不存在 ------" );
-			return new ResultJson<List<AuthInfo>>( 1, "用户角色不存在", null );
-		}
-		
-		/*
-		 * 查询 
-		 */
-		ArrayList<AuthInfo> authInfos = roleService.findAuthByRolidServ(rolid);
-		if( authInfos != null ) {
-			logger.debug( "---C---- 用户权限查询成功 ------authInfos：" + authInfos );
-			return new ResultJson<List<AuthInfo>>( 0, "用户角色权限查询成功", authInfos );
-		}else {
-			logger.debug( "---C---- 用户角色查询失败或无任何权限 ------authInfos：" + authInfos );
-			return new ResultJson<List<AuthInfo>>( 1, "用户角色权限查询失败或无任何权限", null );
-		}
-	}
-	
 	
 	/**   
 	 * @Title: getAuthByRolid   

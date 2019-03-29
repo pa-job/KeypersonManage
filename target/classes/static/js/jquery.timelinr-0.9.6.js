@@ -31,6 +31,18 @@ jQuery.fn.timelinr = function(options){
 		autoPlayPause: 						2000					// value: integer (1000 = 1 seg), default to 2000 (2segs)
 	}, options);
 
+	function showDetails( obj ){
+		console.log( '-----------showDetails--------------' );
+		var url= ipPort + "/country/detail",data={'id':$(this).attr('id')};
+		ajax( 'get', url, data, countryDetailSF );
+	}
+	
+	function countryDetailSF( jsonData ){
+		console.log( '------------countryDetailSF-------------' );
+		console.log( jsonData );
+		
+	}
+	
 	$(function(){
 		// Checks if required elements exist on page before initializing timelinr | improvement since 0.9.55
 		if ($(settings.datesDiv).length > 0 && $(settings.issuesDiv).length > 0) {
@@ -105,6 +117,39 @@ jQuery.fn.timelinr = function(options){
 				} else if(settings.orientation == 'vertical') {
 					$(settings.datesDiv).animate({'marginTop':defaultPositionDates-(heightDate*currentIndex)},{queue:false, duration:'settings.datesSpeed'});
 				}
+				
+				//点击时间轴
+				console.log('---------click------------');
+				console.log(this);
+				var url = ipPort + "/country",data = $( this ).attr('id');
+				$.ajax({
+				     type : "GET",
+				     url : url,
+				     data : {"id":data.substring(1,data.length)},
+				     async : false, 
+				     cache : true,
+				     contentType : "application/x-www-form-urlencoded",
+				     dataType : "json",
+				     success : function( jsonData ){
+				 		if( jsonData ){
+				 			var data = jsonData.data;
+				 			if( jsonData.state == 0 && data ){
+				 				$( '#historyDetail div p' ).empty();
+								$( '#historyDetail  div p' ).text( data.countryDetail );
+				 			}else{
+				 				console.log(layer);
+				 				layer.msg( jsonData.message, {icon:2} );
+				 			}		
+				 		}else{
+				 			layer.msg( '请求失败', {icon:2} );
+				 		}		
+				     },
+				     error:function(){
+				    	 layer.msg('请求失败：');
+				     }		       
+				});
+				
+				
 			});
 
 			$(settings.nextButton).bind('click', function(event){
