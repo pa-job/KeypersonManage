@@ -6,7 +6,7 @@
 	
 	<!-- ===========================1、查询===============================  -->
 	<select id="findById" parameterType="string" resultType="cn.soa.entity.Area">
-		select * from country_area
+		select * from country_area 
 		where areaName = #{id}
 	</select>
 	

@@ -97,6 +97,7 @@ public class LoginController{
 				for( UserRole u : userRoles) {
 					if( roles != null && roles.isEmpty() ) {
 						roles = u.getName();
+						continue;
 					}
 					roles = roles + "," + u.getName();
 				}

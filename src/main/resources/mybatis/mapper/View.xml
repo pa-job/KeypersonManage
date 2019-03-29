@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="cn.soa.dao.AreaMapper">
+<mapper namespace="cn.soa.dao.ViewMapper">
 	
 	<!-- ===========================1、查询===============================  -->
-	<select id="findById" parameterType="string" resultType="cn.soa.entity.Area">
-		select * from country_area 
-		where areaName = #{id}
+	<select id="findByCAId" parameterType="int" resultType="cn.soa.entity.View">
+		select * from country_area_view 
+		where countryAreaId = #{id}
 	</select>
 	
 	

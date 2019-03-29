@@ -3,25 +3,59 @@ $(function(){
 	/**
 	 * 参数定义
 	 */	
-	var uploadUrl = ipPort + "/upload"
+	var uploadUrl = ipPort + "/upload";
 	var otherF = {
 			"checkLoginState": function(){
 				console.log('-------checkLoginState------');
-				if( getCookie1( name ) ){
-					window.location.href = ipPort + '/html/userCenter/login.html';
+				var name = getCookie1( "organ" );
+				if( name.length == 0 ){
+					layer.open({
+						type: 1,
+						title:"提示信息",
+						btn: ['确定', '取消'],
+						content: "<em style='color:#666666;font-size:12px'>" + "&nbsp&nbsp&nbsp&nbsp请先登录或注册登录" + "</em>",
+						yes: function(index, layero){
+							window.location.href = ipPort + '/html/userCenter/login.html';
+						    //layer.close(index); 
+						},
+						cancel: function(index, layero){ 
+							layer.close(index);
+							return false; 
+						}
+					});
+					return false;
+				}else{
+					return true;
+				}
+				
+			},
+			"checkUserRole": function(){
+				console.log('-------checkUserRole------');
+				var state = otherF.checkLoginState();	
+				console.log(state);
+				if( state ){
+					var role = getCookie1( "role" );
+					role = role.substring( 1, role.length -1 );
+					console.log(role);
+					if( !role ||  role.length == 0){
+						return false;
+					}else if( contains("管理员",role) ){
+						return false;
+					}
+					return true;
 				}
 			}
-	}
+	};
 	var eventCF = {
 			"searchMapCF": function(){
-				console.log('-------searchMapCF------');
-				//otherF.checkLoginState();
-				var value = $( this ).siblings( 'input' ).val(),flag=0;
-				console.log( value );
-				console.log( $( '#timePicShow' ).filter( 'label' ) );
+				console.log('-------searchMapCF------');							
+				otherF.checkLoginState();		
+				var value = $( this ).siblings( 'input' ).val(),flag=0;			
+				if( !value || value.length == 0 ){
+					return;
+				}
 				$.each( $( '#timePicShow' ).find( 'label' ), function( index, item ){
 					var arr = $( item ).text().split('、');
-					console.log( arr );
 					if( arr && $.inArray( value ,arr ) != -1 ){
 						flag=1;
 						eventCF.gotoPic(this);
@@ -37,12 +71,12 @@ $(function(){
 			},
 			"areaCF":function(){
 				console.log('-------areaToDeail------');
+				otherF.checkLoginState();
 				var url = ipPort + '/area', data = $(this).attr('id');
 				$.ajax({
 				     type : "GET",
 				     url : url,
 				     data : {"id":data},
-				     async : false, 
 				     cache : true,
 				     contentType : "application/x-www-form-urlencoded",
 				     dataType : "json",
@@ -54,7 +88,33 @@ $(function(){
 								$( '#historyDetail  div p' ).text( data.areaDetail );
 				 			}else{
 				 				console.log( jsonData.message);
-				 				layer.msg( jsonData.message, {icon:2} );
+				 			}		
+				 		}else{
+				 			layer.msg( '请求失败', {icon:2} );
+				 		}		
+				     },
+				     error:function(){
+				    	 layer.msg('请求失败');
+				     }		       
+				});
+				var viewurl = ipPort + '/view', vdata = $(this).attr('areaid');
+				console.log( this);
+				console.log( vdata);
+				$.ajax({
+				     type : "GET",
+				     url : viewurl,
+				     data : {"id":vdata},
+				     cache : true,
+				     contentType : "application/x-www-form-urlencoded",
+				     dataType : "json",
+				     success : function( jsonData ){
+				 		if( jsonData ){
+				 			var data = jsonData.data;
+				 			if( jsonData.state == 0 && data ){
+				 				$( '#viewDetail source' ).empty();
+								$( '#viewDetail source' ).attr( 'src', data.viewUrl );
+				 			}else{
+				 				console.log( jsonData.message);
 				 			}		
 				 		}else{
 				 			layer.msg( '请求失败', {icon:2} );
@@ -67,28 +127,31 @@ $(function(){
 			},
 			"openUploadPage":function(){
 				console.log('-------uploadVideo------');
-				//弹出页面
-				layer.open({
-					type: 1,
-					content: $('#uploadDom') 
-				});	
+				var state = otherF.checkUserRole();
+				if( state ){
+					//弹出页面
+					layer.open({
+						type: 1,
+						content: $('#uploadDom') 
+					});						
+				}
 				return false;
+				
 			},
 			"chooseFile":function(){
-				console.log('-------chooseFile------');
-				
+				console.log('-------chooseFile------');				
 			}
 	};
 		
 	/**
 	 * 页面初始化
 	 */
-	var userName = getCookie1( name );
-	if( userName ){
+	var userName = getCookie1( "organ" );
+	if( userName && userName.length > 0 ){
 		$( '#userName' ).text();
-		$( '#userName' ).text( userName );
+		$( '#userName' ).text( userName.substring(1,userName.length-1) );
+		$( '#login' ).hide();
 	}
-	console.log(layui.upload);
 	layui.upload.render({
 	    elem: '#test8'
 	    ,url: uploadUrl

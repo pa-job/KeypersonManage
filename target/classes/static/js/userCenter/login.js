@@ -2,7 +2,7 @@
  * 全局变量
  */
 var loginUrl = ipPort + "/user",
-	indexUrl = ipPort + "/html/userCenter/index.html",
+	indexUrl = ipPort + "/html/index.html",
 	indexSonWinIndex;
  
 /**

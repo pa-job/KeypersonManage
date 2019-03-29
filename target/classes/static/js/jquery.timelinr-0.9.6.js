@@ -148,7 +148,31 @@ jQuery.fn.timelinr = function(options){
 				    	 layer.msg('请求失败：');
 				     }		       
 				});
-				
+				var viewurl = ipPort + '/view', vdata = $(this).attr('id');
+				$.ajax({
+				     type : "GET",
+				     url : viewurl,
+				     data : {"id":vdata},
+				     cache : true,
+				     contentType : "application/x-www-form-urlencoded",
+				     dataType : "json",
+				     success : function( jsonData ){
+				 		if( jsonData ){
+				 			var data = jsonData.data;
+				 			if( jsonData.state == 0 && data ){
+				 				$( '#viewDetail source' ).empty();
+								$( '#viewDetail source' ).attr( 'src', data.viewUrl );
+				 			}else{
+				 				console.log( jsonData.message);
+				 			}		
+				 		}else{
+				 			layer.msg( '请求失败', {icon:2} );
+				 		}		
+				     },
+				     error:function(){
+				    	 layer.msg('请求失败');
+				     }		       
+				});
 				
 			});
 
