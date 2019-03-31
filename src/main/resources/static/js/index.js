@@ -62,7 +62,7 @@ $(function(){
 						return false;
 					};								
 				})
-				flag==0?layer.msg('无此内容',{icon:2}):'';
+				flag==0?layer.msg("<em style='color:red'>" + "无此内容" + "</em>",{icon:2}):'';
 			},
 			"gotoPic": function( obj ){
 				console.log('-------gotoPic------');
@@ -72,6 +72,7 @@ $(function(){
 			"areaCF":function(){
 				console.log('-------areaToDeail------');
 				otherF.checkLoginState();
+				$("html,body").animate({scrollTop: $("#historyDetail").offset().top}, 500);
 				var url = ipPort + '/area', data = $(this).attr('id');
 				$.ajax({
 				     type : "GET",
@@ -90,11 +91,11 @@ $(function(){
 				 				console.log( jsonData.message);
 				 			}		
 				 		}else{
-				 			layer.msg( '请求失败', {icon:2} );
+				 			layer.msg( "<em style='color:red'>" + "请求失败" + "</em>", {icon:2} );
 				 		}		
 				     },
 				     error:function(){
-				    	 layer.msg('请求失败');
+				    	 layer.msg( "<em style='color:red'>" + "请求失败" + "</em>", {icon:2} );
 				     }		       
 				});
 				var viewurl = ipPort + '/view', vdata = $(this).attr('value');
@@ -117,11 +118,11 @@ $(function(){
 				 				console.log( jsonData.message);
 				 			}		
 				 		}else{
-				 			layer.msg( '请求失败', {icon:2} );
+				 			layer.msg( "<em style='color:red'>" + "请求失败" + "</em>", {icon:2} );
 				 		}		
 				     },
 				     error:function(){
-				    	 layer.msg('请求失败');
+				    	 layer.msg( "<em style='color:red'>" + "请求失败" + "</em>", {icon:2} );
 				     }		       
 				});
 			},
