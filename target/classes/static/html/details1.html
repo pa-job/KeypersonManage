@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>评论-闲言轻博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../res/layui/css/layui.css">
+<style type="text/css">
+.fly-list {
+	display: block;
+	list-style-type: disc;
+}
+
+.fly-avatar img {
+    display: block;
+    width: 45px;
+    height: 45px;
+    margin: 0;
+    border-radius: 2px;
+}
+.fly-panel {
+    margin-bottom: 15px;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+}
+.fly-panel-title {
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+    border-bottom: 1px dotted #E9E9E9;
+    color: #333;
+    border-radius: 2px 2px 0 0;
+    font-size: 14px;
+}
+.fly-list > li {
+    list-style: none;
+    position: relative;
+    line-height: 22px;
+  	 height: 70px !important; 
+    padding: 15px 15px 15px 75px;
+    border-bottom: 1px dotted #e2e2e2;
+}
+.fly-avatar img {
+    display: block;
+    width: 45px;
+    height: 45px;
+    margin: 0;
+    border-radius: 2px;
+}
+.fly-list > li h2 {
+    position: relative;
+    top:-55px;
+    line-height: 22px;
+    padding: 15px 15px 15px 60px;
+    height: 26px;
+    font-size: 15px;
+    display:inline-block
+}
+.layui-badge{
+    position: relative;
+    display: inline-block;
+    padding: 0 6px;
+    font-size: 12px;
+    text-align: center;
+    background-color: #FF5722;
+    color: #fff;
+    border-radius: 2px;
+}
+.fly-list > li h2 .layui-badge {
+    position: relative;
+    display: inline-block;
+    top: -2px;
+    height: 16px;
+    line-height: 16px;
+    padding: 0 5px;
+    margin-right: 10px;
+    font-size: 12px;
+    border: 1px solid #5FB878;
+    background: none;
+    color: #5FB878;
+}
+.fly-list-info {
+    position: relative;
+    font-size: 13px;
+    color: #999;
+    top:-90px;
+    padding: 15px 15px 15px 60px;
+}
+.fly-list-info>* {
+    padding-right: 15px;
+}
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.editComent{
+display:none
+}
+.rep :hover{
+cursor:pointer;
+}
+.viewComnet{
+ margin-left:5px
+}
+.fly-filter>a{
+	padding-left:40px
+}
+#test1{
+margin-left:30%;
+}
+</style>
+</head>
+<body class="lay-blog">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md11">
+
+			<div class="fly-panel" style="margin-bottom: 0;">
+
+				<div class="fly-panel-title fly-filter">
+					<a href="" class="layui-this layui-icon">&#xe609; 发表评论</a>
+				</div>
+
+				<ul class="fly-list">
+				</ul>
+				<div id="test1"></div>
+			</div>
+			
+		</div>
+	</div>
+	<div class="editComent">
+		<form class="layui-form" action="">
+			<div class="layui-form-item layui-form-text">
+				<textarea class="layui-textarea" style="resize: none" placeholder=""
+					name='detail'></textarea>
+			</div>
+		</form>
+	</div>
+	<ul class="moreReplay"></ul>
+
+	<script type="text/javascript"
+		src="../jsPackage/jquery-3.3.1/jquery-3.3.1.js"></script>
+	<script src="../jsPackage/jquery-3.3.1/jquery.cookie.js"></script>
+	<script src="../res/layui/layui.all.js"></script>
+	<script>
+		$(function(){
+			var form=layui.form,
+				layer=layui.layer,
+			    laypage = layui.laypage;
+			  //分页
+			  laypage.render({
+				 elem: 'test1'//分页容器的id
+				 ,limit:5
+			    ,count: 100 //总页数
+			    ,skin: '#1E9FFF' //自定义选中色值
+			    //,skip: true //开启跳页
+			    ,jump: function(obj, first){
+			      if(!first){
+			    	  $('.fly-list').html('');
+			    	  var param={countryAreaId:'1',parentId:0,page:obj.curr,limit:obj.limit};
+			    	  loadConment(param);
+			      }
+			    }
+			  });
+			$('.pull-right').click(optionLayer);
+			function optionLayer(){
+				layer.open({
+					title:'发表评论',
+					type:1,
+					content:$('.editComent'),
+					area: ['600px', '200px'],
+					shade: [0.8, '#393D49'],
+					 btn: ['提交', '关闭', ],
+					 yes:submitComent,
+					 btn2:function(){
+						 layer.msg("2")
+					 },
+					btnAlign: 'r',
+					 closeBtn :0,//不显示关闭按钮
+				});
+
+				
+			}
+			function  submitComent(){
+				var date=new Date();
+				 var  localD=date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+				if($('textarea[name ="detail"]').val()){
+					var param={countryAreaId:'1',parentId:0,noteId:1,noteName:'lxf',detail:'ssafasdfs',createTime:localD};
+					if($(this).hasClass('pull-right')){
+						param.parentId=$(this).next().html();
+					}
+					$.get('/HistoryMap/areaNote/addCountryAreaNote',param,
+						function(ajaxData){
+						if(ajaxData.data==0){
+							layer.msg("评论成功",{icon:6})
+						};
+						layer.closeAll();
+						$('.editComent').hide();
+						var html=htmlFactory(param);
+						$('.fly-list').append(html);
+					});
+				}
+			};
+			//根据区域id获取所有的评论，动态生成
+			function loadConment(param){
+				$.get('/HistoryMap/areaNote/queryCountryAreaNoteByconditions',param,function(ajaxData){
+					if(!ajaxData.data.length){
+						$('.fly-list').append('<div>暂时没有评论</div>')
+					}else{
+						//动态生成评论
+						var html="";
+						var d=ajaxData.data;
+						for(var i in  d){
+							html+=htmlFactory(d[i]);
+						}
+						$('.fly-list').append(html);
+					}
+				});
+			}
+			loadConment();
+			//动态生成html
+			function htmlFactory(d){
+				var imgs=['one.jpg','two .jpg','three.png','four.jpg','five.png','six.jpg','seven.jpg','eight.jpg'];
+				var index= Math.floor(Math.random()*8)
+				return 	'<li><a href="#" class="fly-avatar">'+
+				'<img src="../images/'+imgs[index]+'" alt="">'+
+				'</a>' +
+				'<h2>'+
+				'<a class="layui-badge">话 题</a> '+
+				'<a href="#">'+d.detail+'</a>'+
+				'</h2>'+
+				'<div class="fly-list-info">'+
+				'<a href="" link=""> <cite class="name">'+d.noteName+'</cite>'+
+				'</a> <span>'+d.createTime+'</span>'	+
+				'<span class="parentId" style="display:none">'+d.parentId+'</span>'+
+				'<span class="rep">回复 <i class="iconfont icon-pinglun1 layui-icon" title="回答">&#xe611;</i> '+	
+				'<span class="viewComnet">更多 <i class="iconfont icon-pinglun1 layui-icon" title="查看"> &#xe606;</i></span>'+
+				'</span>'+	
+				'</div>'+
+				'</li>';
+			}
+			//为点击查看跟多回复添加事件
+			function moreReplyFactory(d,noteName){
+				return '<li>'+noteName+'@'+d.noteName+':'+d.detail+'</li>';
+			}
+			$('.fly-list').on('click','.rep',optionLayer);
+			
+			$('.fly-list').on('click','.viewComnet',function(){
+				var noteName=$(this).parent().find('.name').html();
+				var parentId=$(this).parent().find('.parentId').html();
+				console.log(noteName);
+				console.log(parentId);
+				var param={countryAreaId:1,parentId:parentId,limit:100000,page:1}
+				$.get('/HistoryMap/areaNote/queryCountryAreaNoteByconditions',param,function(ajaxData){
+					if(!ajaxData.data.length){
+						layer.msg('暂时没有更多评论',{icon:6})
+					}else{
+						//动态生成评论
+						var html="";
+						var d=ajaxData.data;
+						for(var i in  d){
+							console.log(d[i]);
+							html+=moreReplyFactory(d[i],noteName);
+						}
+						$('.moreReplay').append(html);
+						layer.open({
+							title:'相关回复',
+							type:1,
+							anim: 2,
+							shade: [0.8, '#393D49'],
+							content:$('.moreReplay'),
+							area: ['98%', '80%'],
+							fixed: true,
+							shade: [0.8, '#393D49'],
+							 btn: ['已阅览' ],
+							 cancel:function(){
+								 layer.closeAll();
+								 $('.moreReplay').hide();
+							 },
+							 yes:function(){
+								 layer.closeAll();
+								 $('.moreReplay').hide();
+							 },
+							
+							btnAlign: 'c'
+						});
+					}
+				})
+				$(this).on('click',optionLayer);
+			})
+		})
+	</script>
+</body>
+</html>
