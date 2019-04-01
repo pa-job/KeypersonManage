@@ -101,11 +101,13 @@ public class LoginController{
 					}
 					roles = roles + "," + u.getName();
 				}
+				roles = userRoles.get(0).getRolid();
 				GlobalUtil.addCookie( "role", roles );
 			}		
 			
 			//设置组织			
 			UserOrganization user = userService.getUserOrganByUsernum( userName.trim() );
+			logger.debug("-------user:-----------" + user );
 			if( user != null ) {
 				GlobalUtil.addCookie( "organ", user.getParent_id() );
 			}
