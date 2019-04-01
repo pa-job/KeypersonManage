@@ -155,13 +155,12 @@ $(function(){
 	}
 	layui.upload.render({
 	    elem: '#test8'
-	    ,url: uploadUrl + "?currentId=" + currentId;
+	    ,url: uploadUrl + "?currentId=" + currentId
 	    ,method: 'post'
 	    ,auto: false
 	    ,accept:"video"
 	    ,bindAction: '#test9'
 	    ,done: function(res){
-	      console.log(res);
 	    },error: function(index, upload){
 	        layer.closeAll('loading'); //关闭loading
 	    }
@@ -173,6 +172,5 @@ $(function(){
 	$('#searchMap i').on( 'click', eventCF.searchMapCF );
 	$('#timeline input').on( 'click', eventCF.areaCF );
 	$('#uploadVideo').on( 'click', eventCF.openUploadPage );
-	
 	
 })

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<link rel="stylesheet" href="../res/layui/css/layui.css">
+</head>
+<body>
+<button type="button" class="layui-btn" id="test1">
+  <i class="layui-icon">&#xe67c;</i>上传图片
+</button>
+<script type="text/javascript" src="../res/layui/layui.all.js"></script>
+<script>
+layui.use('upload', function(){
+	  var upload = layui.upload;
+	   
+	  //执行实例
+	  var id='1';
+	  var uploadInst = upload.render({
+	    elem: '#test1' //绑定元素
+	    ,url: '/HistoryMap/video/uploadMultiFile/1'
+	    ,done: function(res){
+	      console.log(res);
+	    }
+	    ,error: function(){
+
+	  }
+	      //请求异常回调
+	    ,accept:'file'
+	    ,multiple:true
+	    ,number:12
+	    ,drag:true
+	})
+})
+</script>
+</body>
+</html>

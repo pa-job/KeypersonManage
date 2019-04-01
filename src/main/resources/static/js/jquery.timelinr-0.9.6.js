@@ -39,8 +39,7 @@ jQuery.fn.timelinr = function(options){
 	
 	function countryDetailSF( jsonData ){
 		console.log( '------------countryDetailSF-------------' );
-		console.log( jsonData );
-		
+		console.log( jsonData );		
 	}
 	
 	$(function(){
@@ -141,11 +140,11 @@ jQuery.fn.timelinr = function(options){
 				 				layer.msg( jsonData.message, {icon:2} );
 				 			}		
 				 		}else{
-				 			layer.msg( '请求失败', {icon:2} );
+				 			layer.msg("<em style='color:red'>" + "请求数据为空" + "</em>", {icon:2} );
 				 		}		
 				     },
 				     error:function(){
-				    	 layer.msg('请求失败：');
+				    	 layer.msg("<em style='color:red'>" + "请求失败" + "</em>", {icon:2});
 				     }		       
 				});
 				var viewurl = ipPort + '/view', vdata = $(this).attr('id');
@@ -166,14 +165,16 @@ jQuery.fn.timelinr = function(options){
 				 				console.log( jsonData.message);
 				 			}		
 				 		}else{
-				 			layer.msg( '请求失败', {icon:2} );
+				 			layer.msg( "<em style='color:red'>" + "请求数据为空" + "</em>", {icon:2} );
 				 		}		
 				     },
 				     error:function(){
-				    	 layer.msg('请求失败');
+				    	 layer.msg("<em style='color:red'>" + "请求失败" + "</em>", {icon:2} );
 				     }		       
 				});
 				currentId = vdata.substring(1,data.length);
+				console.log('--------------currentId-----------1----');
+		    	console.log(currentId);
 			});
 
 			$(settings.nextButton).bind('click', function(event){
