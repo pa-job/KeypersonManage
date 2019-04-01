@@ -173,7 +173,7 @@ jQuery.fn.timelinr = function(options){
 				    	 layer.msg('请求失败');
 				     }		       
 				});
-				
+				currentId = vdata.substring(1,data.length);
 			});
 
 			$(settings.nextButton).bind('click', function(event){

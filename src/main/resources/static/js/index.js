@@ -125,6 +125,7 @@ $(function(){
 				    	 layer.msg( "<em style='color:red'>" + "请求失败" + "</em>", {icon:2} );
 				     }		       
 				});
+				currentId = vdata;
 			},
 			"openUploadPage":function(){
 				console.log('-------uploadVideo------');
@@ -136,8 +137,7 @@ $(function(){
 						content: $('#uploadDom') 
 					});						
 				}
-				return false;
-				
+				return false;				
 			},
 			"chooseFile":function(){
 				console.log('-------chooseFile------');				
@@ -155,7 +155,7 @@ $(function(){
 	}
 	layui.upload.render({
 	    elem: '#test8'
-	    ,url: uploadUrl
+	    ,url: uploadUrl + "?currentId=" + currentId;
 	    ,method: 'post'
 	    ,auto: false
 	    ,accept:"video"
