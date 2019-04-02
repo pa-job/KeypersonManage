@@ -6,7 +6,7 @@
 	
 	<!-- ===========================1、查询===============================  -->
 	<select id="findByCAId" parameterType="int" resultType="cn.soa.entity.View">
-		select * from country_area_view 
+		select avid,countryAreaId,viewName,areaUrl viewUrl from country_area_view 
 		where countryAreaId = #{id}
 	</select>
 	

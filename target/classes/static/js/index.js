@@ -3,7 +3,8 @@ $(function(){
 	/**
 	 * 参数定义
 	 */	
-	var uploadUrl = ipPort + "/upload";
+	console.log(currentId);
+	var uploadUrl = ipPort + "/video/uploadMultiFile/";
 	var otherF = {
 			"checkLoginState": function(){
 				console.log('-------checkLoginState------');
@@ -155,7 +156,7 @@ $(function(){
 	}
 	layui.upload.render({
 	    elem: '#test8'
-	    ,url: uploadUrl + "?currentId=" + currentId
+	    ,url: uploadUrl +  currentId
 	    ,method: 'post'
 	    ,auto: false
 	    ,accept:"video"
