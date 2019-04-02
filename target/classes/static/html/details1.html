@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>评论-闲言轻博客</title>
+<title>评论-中国历史学习讨论</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../res/layui/css/layui.css">
 <style type="text/css">
@@ -118,11 +118,9 @@ margin-left:30%;
 <body class="lay-blog">
 	<div class="layui-row layui-col-space15">
 		<div class="layui-col-md11">
-
 			<div class="fly-panel" style="margin-bottom: 0;">
-
 				<div class="fly-panel-title fly-filter">
-					<a href="" class="layui-this layui-icon">&#xe609; 发表评论</a>
+					<a  class="layui-this layui-icon write">&#xe609; 发表评论</a>
 				</div>
 
 				<ul class="fly-list">
@@ -131,16 +129,17 @@ margin-left:30%;
 			</div>
 			
 		</div>
-	</div>
-	<div class="editComent">
+			<div class="editComent">
 		<form class="layui-form" action="">
 			<div class="layui-form-item layui-form-text">
-				<textarea class="layui-textarea" style="resize: none" placeholder=""
+				<textarea class="layui-textarea content"  id="content" style="resize: none" placeholder=""
 					name='detail'></textarea>
 			</div>
 		</form>
 	</div>
 	<ul class="moreReplay"></ul>
+	</div>
+
 
 	<script type="text/javascript"
 		src="../jsPackage/jquery-3.3.1/jquery-3.3.1.js"></script>
@@ -151,6 +150,14 @@ margin-left:30%;
 			var form=layui.form,
 				layer=layui.layer,
 			    laypage = layui.laypage;
+			var parentId=0;
+			//cookie中获取 用户名字
+			var name =$.cookie('name').replace(/\"/g,""),
+				num=$.cookie('num').replace(/\"/g,"");
+			if(!name){
+				layer.msg('请登录系统');
+				$('.write').off('click');
+			}
 			  //分页
 			  laypage.render({
 				 elem: 'test1'//分页容器的id
@@ -166,7 +173,10 @@ margin-left:30%;
 			      }
 			    }
 			  });
-			$('.pull-right').click(optionLayer);
+			$('.write').click(function(){
+				optionLayer();
+				parentId=0;
+			});
 			function optionLayer(){
 				layer.open({
 					title:'发表评论',
@@ -177,7 +187,7 @@ margin-left:30%;
 					 btn: ['提交', '关闭', ],
 					 yes:submitComent,
 					 btn2:function(){
-						 layer.msg("2")
+						layer.closeAll();
 					 },
 					btnAlign: 'r',
 					 closeBtn :0,//不显示关闭按钮
@@ -188,11 +198,9 @@ margin-left:30%;
 			function  submitComent(){
 				var date=new Date();
 				 var  localD=date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
-				if($('textarea[name ="detail"]').val()){
-					var param={countryAreaId:'1',parentId:0,noteId:1,noteName:'lxf',detail:'ssafasdfs',createTime:localD};
-					if($(this).hasClass('pull-right')){
-						param.parentId=$(this).next().html();
-					}
+				
+					var param={countryAreaId:'1',parentId:parentId,noteId:num,noteName:name,detail:$('#content').val(),createTime:localD};
+			
 					$.get('/HistoryMap/areaNote/addCountryAreaNote',param,
 						function(ajaxData){
 						if(ajaxData.data==0){
@@ -200,16 +208,21 @@ margin-left:30%;
 						};
 						layer.closeAll();
 						$('.editComent').hide();
-						var html=htmlFactory(param);
-						$('.fly-list').append(html);
+						$('.fly-list>div').html('');
+						if(param.parentId==0){
+							var html=htmlFactory(param);
+							
+							$('.fly-list').append(html);
+						};
+
 					});
-				}
+				
 			};
 			//根据区域id获取所有的评论，动态生成
 			function loadConment(param){
 				$.get('/HistoryMap/areaNote/queryCountryAreaNoteByconditions',param,function(ajaxData){
 					if(!ajaxData.data.length){
-						$('.fly-list').append('<div>暂时没有评论</div>')
+						layer.msg('暂时没有更多评论',{icon:6});
 					}else{
 						//动态生成评论
 						var html="";
@@ -236,8 +249,8 @@ margin-left:30%;
 				'<div class="fly-list-info">'+
 				'<a href="" link=""> <cite class="name">'+d.noteName+'</cite>'+
 				'</a> <span>'+d.createTime+'</span>'	+
-				'<span class="parentId" style="display:none">'+d.parentId+'</span>'+
-				'<span class="rep">回复 <i class="iconfont icon-pinglun1 layui-icon" title="回答">&#xe611;</i> '+	
+				'<span class="anid" style="display:none">'+d.anid+'</span>'+
+				'<span class="rep">回复 <i class="iconfont icon-pinglun1 layui-icon" title="回答">&#xe611;</i></span> '+	
 				'<span class="viewComnet">更多 <i class="iconfont icon-pinglun1 layui-icon" title="查看"> &#xe606;</i></span>'+
 				'</span>'+	
 				'</div>'+
@@ -245,13 +258,17 @@ margin-left:30%;
 			}
 			//为点击查看跟多回复添加事件
 			function moreReplyFactory(d,noteName){
-				return '<li>'+noteName+'@'+d.noteName+':'+d.detail+'</li>';
+				return '<li>'+d.noteName+'@'+noteName+':'+d.detail+'</li>';
 			}
-			$('.fly-list').on('click','.rep',optionLayer);
+			$('.fly-list').on('click','.rep',function(){
+				optionLayer();
+				 parentId=$(this).parents().siblings().find('.anid').html();
+				
+			});
 			
-			$('.fly-list').on('click','.viewComnet',function(){
-				var noteName=$(this).parent().find('.name').html();
-				var parentId=$(this).parent().find('.parentId').html();
+			$('.fly-list').off('click').on('click','.viewComnet',function(){
+				var noteName=$(this).parents().siblings().find('.name').html();
+				 parentId=$(this).parents().siblings().find('.anid').html();
 				console.log(noteName);
 				console.log(parentId);
 				var param={countryAreaId:1,parentId:parentId,limit:100000,page:1}
@@ -260,6 +277,7 @@ margin-left:30%;
 						layer.msg('暂时没有更多评论',{icon:6})
 					}else{
 						//动态生成评论
+						$('.moreReplay').html('');
 						var html="";
 						var d=ajaxData.data;
 						for(var i in  d){

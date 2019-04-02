@@ -327,7 +327,7 @@ jQuery.fn.timelinr = function(options){
 		 * 参数定义
 		 */	
 		console.log(currentId);
-		var uploadUrl = ipPort + "/upload";
+		var uploadUrl = ipPort + "/video/uploadMultiFile/";
 		var otherF = {
 				"checkLoginState": function(){
 					console.log('-------checkLoginState------');
@@ -479,14 +479,15 @@ jQuery.fn.timelinr = function(options){
 		}
 		layui.upload.render({
 		    elem: '#test8'
-		    ,url: uploadUrl + "?currentId=" + currentId
+		    ,url: uploadUrl +  currentId
 		    ,method: 'post'
 		    ,auto: false
 		    ,accept:"video"
 		    ,bindAction: '#test9'
 		    ,done: function(res){
+		    	  layer.closeAll(); //关闭loading
 		    },error: function(index, upload){
-		        layer.closeAll('loading'); //关闭loading
+		        layer.closeAll(); //关闭loading
 		    }
 		});  
 		console.log('--------------currentId-----------2----');
@@ -497,7 +498,7 @@ jQuery.fn.timelinr = function(options){
 		$('#searchMap i').on( 'click', eventCF.searchMapCF );
 		$('#timeline input').on( 'click', eventCF.areaCF );
 		$('#uploadVideo').on( 'click', eventCF.openUploadPage );
-		
+		$('.pull-center').on('click',function(){location.href='details1.html'});
 	});
 };
 
