@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+  	<link rel="stylesheet" href="../../frameJs/layui-v2.4.5/css/layui.css">
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+	    	<div class="layui-logo" style="font-size:24px">设备管理系统</div>
+	    	<!-- 头部区域（可配合layui已有的水平导航） -->
+	    	<ul class="layui-nav layui-layout-left" id="firstMeno">
+	    		
+	    	</ul>
+		    <ul class="layui-nav layui-layout-right">
+		    	<li class="layui-nav-item">
+			        <a href="javascript:;" id="userName">
+			        	<img src="http://t.cn/RCzsdCq" class="layui-nav-img">			         	
+			        </a>
+			        <!-- <dl class="layui-nav-child">
+			          	 <dd id="userInfo" ><a href="">基本资料</a></dd> 
+			          	<dd><a href="">安全设置</a></dd>·
+			        </dl> -->
+		      	</li>
+				<li class="layui-nav-item" id="logout"><a href="login.html">退出登录</a></li>
+		    </ul>
+		</div>
+	  
+		<div class="layui-side layui-bg-black">
+	    	<div class="layui-side-scroll">
+	      	<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+	      		<ul class="layui-nav layui-nav-tree"  lay-filter="test" >
+	      			<li class="layui-nav-item layui-nav-itemed" id="index1">
+		          		<a class="" href="javascript:;">重点人员管理</a>
+	        		</li>
+	        		<li class="layui-nav-item layui-nav-itemed" id="index2" >
+		          		<a class="" href="javascript:;">事件管理</a>
+	        		</li>
+	        		<li class="layui-nav-item layui-nav-itemed" id="index3" >
+		          		<a class="" href="javascript:;">重点人员微博管理</a>
+	        		</li>
+	      		</ul>
+			</div>
+		</div>
+	  
+		<div class="layui-body" id="indexContent">
+	    	<!-- 内容主体区域 -->
+	    	<iframe style="padding: 2px;width:100%;height:100%;" scrolling="no" src='keyPepole.html' id="ifra">内容主体区域……</iframe>
+		</div>
+	</div>
+	<script src="../../frameJs/layui-v2.4.5/layui.all.js" ></script>
+	<script src="../../frameJs/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.layui-side-scroll li').click(function(){
+				var arr={'index1':'keyPepole.html','index2':'keyEvent.html','index3':''};
+				$('#indexContent>iframe').attr('src',arr[this.id]);
+			});
+		})
+	</script> 
+</body>
+</html>

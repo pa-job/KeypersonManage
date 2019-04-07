@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>重点人员管理</title>
+<link rel="stylesheet" href="../../frameJs/layui-v2.4.5/css/layui.css">
+<style type="text/css">
+	.select_item{
+	display:inline-block
+	}
+</style>
+</head>
+<body>
+	<div id="select-container" style="margin: 0px; height: 40px">
+		<form class="layui-form select-form"  action=""
+			style="margin-top: 20px" id="toolbarDemo">
+			<div class="layui-form-item select_item">
+				<div class="layui-input-inline">
+					<input type="text" name="name" class="layui-input "
+						placeholder="人员姓名">
+				</div>
+			</div>
+			<div class="layui-form-item select_item">
+				<div class="layui-input-inline">
+					<input type="text" name="mircoblogNum" class="layui-input "
+						placeholder="博客账号">
+				</div>
+			</div>
+			<div class="layui-form-item select_item">
+				<div class="layui-input-inline">
+					<input type="text" name="policeName" class="layui-input "
+						placeholder="所属派出所">
+				</div>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="demo" lay-filter="test"></table>
+	<div class="layui-row" id="popUpdateTest" style="display: none;">
+		<div class="layui-col-md10">
+			<form class="layui-form role-form" lay-filter="roleForm" action=""
+				style="margin-top: 20px">
+				<div class="layui-form-item" style="display: none">
+					<label class="layui-form-label">关键人员id</label>
+					<div class="layui-input-block">
+						<input type="text" name="keyId">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">人员姓名</label>
+					<div class="layui-input-block">
+						<input type="text" name="name" lay-verify="required"
+							autocomplete="off" placeholder="请输入人员姓名" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">人员编号</label>
+					<div class="layui-input-block">
+						<input type="text" name="userNum" lay-verify="required"
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">微博账号</label>
+					<div class="layui-input-block">
+						<input type="text" name="mircoblogNum" lay-verify="required"
+							class="layui-input ">
+					</div>
+				</div>
+				<div class="layui-form-item" >
+					<label class="layui-form-label">所属派出所</label>
+					<div class="layui-input-block">
+						<input type="text" name="policeName" autocomplete="off" 
+						class="layui-input" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">亲属关系</label>
+					<div class="layui-input-block">
+						<select name="relation" lay-verify="required">
+							<option value="">选择亲属关系</option>
+							<option value="-1">本人</option>
+							<option value="0">父亲</option>
+							<option value="1">母亲</option>
+							<option value="2">兄妹</option>
+							<option value="3">其他</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">人员分类</label>
+					<div class="layui-input-block">
+						<select name="mark" lay-verify="required">
+							<option value="">请选择</option>
+							<option value="0">重点人员</option>
+							<option value="1">重点人员亲属</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item" style="margin-top: 40px">
+					<div class="layui-input-block">
+						<button class="layui-btn form-sub" lay-submit
+							lay-filter="formSubmit">确认</button>
+						<button class="layui-btn cancel" lay-filter="cancel">关闭</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="../../frameJs/layui-v2.4.5/layui.all.js"></script>
+	<script src="../../frameJs/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var table=layui.table,
+			form =layui.form;
+		 table.render({
+			    elem: '#demo'
+			    ,height: 420
+			    ,url: '/KeypersonManage/KeyPerson/selectByConditions' //数据接口
+			    ,title: '重点人员管理'
+			    ,page: true //开启分页
+			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+			    ,cols: [[ //表头
+			      {type: 'checkbox', fixed: 'left'}
+			      ,{field: 'keyId', title: 'keyId', hide:true}
+			      ,{field: 'userNum', title: '人员编号'}
+			      ,{field: 'name', title: '人员姓名'}
+			      ,{field: 'mircoblogNum', title: '微博账号'}
+			      ,{field: 'policeName', title: '所属派出所'}
+			      ,{field: 'relation', title: '所属亲属关系'} 
+			      ,{field: 'rId', title: '重点人员id'}
+			      ,{field: 'mark', title: '备注信息'}
+			    ]]
+			  });
+		 //弹出框基本 
+		 var layerAction={
+				 openLayer:function(){
+				        layer.open({
+				        	closeBtn : 0,
+				        	type:1,
+				        	title:'人员管理',
+				        	area:['500px','460px'],
+				        	content:$('#popUpdateTest')
+				        });
+				 },
+				 closeLayer:function(){
+					 layer.closeAll();
+				 }
+		 }
+		 //监听工具事件
+		table.on('toolbar(test)', function(obj){
+		    var checkStatus = table.checkStatus(obj.config.id)
+		    ,data = checkStatus.data; //获取选中的数据
+		    switch(obj.event){
+		      case 'add':
+		    	 $('.role-form')[0].reset();
+		    	 form.render();
+		    	 layerAction.openLayer();
+		      break;
+		      case 'update':
+		        if(data.length === 0){
+		          layer.msg('请选择一行',{icon:5});
+		        } else if(data.length > 1){
+		          layer.msg('只能同时编辑一个',{icon:5});
+		        } else {
+		        	form.val("roleForm", data[0]);
+		        	layerAction.openLayer();
+		        }
+		      break;
+		      case 'delete':
+		        if(data.length === 0){
+		          layer.msg('请选择一行',{icon:5});
+		        } else {
+		         layer.confirm('是否确认删除多条数据',{icon: 3, title:'提示'}, function(index){
+		        	  var arr=[];
+		        	  $.each(data,function(i,item){
+		        		  arr.push(item.keyId);
+		        	  });
+		        	  $.get('/KeypersonManage/KeyPerson/deleteByPrimaryKeys',{list:arr},function(ajaxD){
+		        		  if(ajaxD.state==0){layer.msg('数据删除成功',{icon:6})};
+		        		  $(".layui-laypage-btn")[0].click();
+		        	  })
+		        	  layer.close(index);
+		        	});
+		        }
+		      break;
+		    };
+		  });
+		
+		 //为筛选区添加事件
+		 	$('#select-container input').focus(function(){
+		 		$(this).attr('placeholder','')
+		 	});
+		 	$('#select-container input').blur(function(){
+		 		var ar={name:'人员姓名',policeName:'所属派出所',mircoblogNum:'微博账号'};
+		 		$(this).attr('placeholder',ar[this.name])
+		 	});
+		 	$('.select_item').change(function(){
+				 var param={
+						 name:$(':input[name="name"]').val(),
+						 policeName:$(':input[name="policeName"]').val(),
+						 mircoblogNum:$(':input[name="mircoblogNum"]').val()
+						 };
+					table.reload('demo',{where:param});
+		 });
+		 //表单提交监听事件
+			form.on('submit(formSubmit)', function(data) {
+				$.ajax({
+					url : '/KeypersonManage/KeyPerson/addOrUpdatePepole',
+					data : $('.role-form').serialize(),
+					dataType : 'json',
+					success : function(data) {
+						if(data.state==0){
+							layer.closeAll();
+							$('#popUpdateTest').hide();
+							$(".layui-laypage-btn")[0].click();
+						}else{
+							layer.msg("添加失败，请重新操作",{icon:5});
+						}
+					
+					},
+					error : function() {
+						layer.msg("添加失败，请重新操作",{icon:5});
+					}
+				});
+				return false;
+			});
+	})
+	</script>
+</body>
+</html>

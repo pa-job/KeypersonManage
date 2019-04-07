@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import cn.soa.HistoryMapApplication;
+import cn.soa.KeypersonManageApplication;
 import cn.soa.entity.UserRegister;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = HistoryMapApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = KeypersonManageApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 //@WebAppConfiguration
 public class UserRegistTest {
 	@Autowired

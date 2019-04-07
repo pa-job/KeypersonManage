@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.soa.dao.KeyEventMapper" >
+  <resultMap id="BaseResultMap" type="cn.soa.entity.KeyEvent" >
+    <id column="E_ID" property="eid" jdbcType="INTEGER" />
+    <result column="EVENT_TYPE" property="eventType" jdbcType="VARCHAR" />
+    <result column="EVENT_INTRO" property="eventIntro" jdbcType="VARCHAR" />
+    <result column="EVENT_DETAIL" property="eventDetail" jdbcType="VARCHAR" />
+    <result column="EVENT_TIME" property="eventTime" jdbcType="DATE" />
+    <result column="EVENT_PERSON" property="eventPerson" jdbcType="VARCHAR" />
+    <result column="LEADER_NAME" property="leaderName" jdbcType="VARCHAR" />
+    <result column="REMARK1" property="remark1" jdbcType="VARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    E_ID, EVENT_TYPE, EVENT_INTRO, EVENT_DETAIL, EVENT_TIME, EVENT_PERSON, LEADER_NAME, 
+    REMARK1, REMARK2
+  </sql>
+  <select id="selectByConditions" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from key_event_info
+       <where>			
+    	<if test ="record!=null">
+  				<if test='record.eventPerson!=null'>
+    		 and  EVENT_PERSON like concat('%', #{record.eventPerson}, '%')
+    			</if>
+    			<if test='record.eventIntro!=null'>
+    		and EVENT_INTRO like concat('%', #{record.eventIntro}, '%')
+    			</if>
+    			<if test='record.eventType!=null'>
+    		and EVENT_TYPE = #{record.eventType}
+    			</if>
+    	 </if>
+    </where>
+    	<if test="pageSize!=-1">
+			limit #{page}  ,#{pageSize}
+		</if>
+  </select>
+    <select id="counts"  parameterType="cn.soa.entity.KeyEvent" resultType="int">
+  		select count(*) from  key_event_info
+  		       <where>			
+    	<if test ="record!=null">
+  				<if test='record.eventPerson!=null'>
+    		 and  EVENT_PERSON like concat('%', #{record.eventPerson}, '%')
+    			</if>
+    			<if test='record.eventIntro!=null'>
+    		and EVENT_INTRO like concat('%', #{record.eventIntro}, '%')
+    			</if>
+    			<if test='record.eventType!=null'>
+    		and EVENT_TYPE = #{record.eventType}
+    			</if>
+    	 </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKeys"  >
+    delete from key_event_info where E_ID  in
+      	 <foreach collection="lists" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+      </foreach>
+  </delete>
+  <insert id="insert" parameterType="cn.soa.entity.KeyEvent" >
+    insert into key_event_info 
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+    		<if test="record.eId !=null ">
+				E_ID,	
+			</if>
+			<if test="record.eventType !=null ">
+			EVENT_TYPE,
+			</if>
+			<if test="record.eventIntro !=null ">
+			EVENT_INTRO,
+			</if>
+			<if test="record.eventDetail !=null ">
+			EVENT_DETAIL,
+			</if>
+			<if test="record.eventTime !=null ">
+			 EVENT_TIME,
+			</if>
+			<if test="record.eventPerson !=null ">
+			 EVENT_PERSON, 
+			</if>
+			<if test="record.leaderName !=null ">
+			 LEADER_NAME,
+			</if>
+			<if test="record.remark1 !=null ">
+			 REMARK1,
+			</if>
+			<if test="record.remark2 !=null ">
+			 REMARK2,
+			</if>
+		</trim>	
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="record.eId !=null ">
+				#{record.eId },	
+			</if>
+			<if test="record.eventType !=null ">
+				#{record.eventType },	
+			</if>
+			<if test="record.eventIntro !=null ">
+			#{record.eventIntro },
+			</if>
+			<if test="record.eventDetail !=null ">
+			#{record.eventDetail },
+			</if>
+			<if test="record.eventTime !=null ">
+			#{record.eventTime},
+			</if>
+			<if test="record.eventPerson !=null ">
+			 #{record.eventPerson},
+			</if>
+			<if test="record.leaderName !=null ">
+			 #{record.leaderName },
+			</if>
+			<if test="record.remark1 !=null ">
+			#{record.remark1},
+			</if>
+			<if test="record.remark2 !=null ">
+			#{record.remark2 },
+			</if>
+		</trim>
+  </insert>
+  <insert id="insertSelective" parameterType="cn.soa.entity.KeyEvent" >
+    insert into key_event_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        E_ID,
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE,
+      </if>
+      <if test="eventIntro != null" >
+        EVENT_INTRO,
+      </if>
+      <if test="eventDetail != null" >
+        EVENT_DETAIL,
+      </if>
+      <if test="eventTime != null" >
+        EVENT_TIME,
+      </if>
+      <if test="eventPerson != null" >
+        EVENT_PERSON,
+      </if>
+      <if test="leaderName != null" >
+        LEADER_NAME,
+      </if>
+      <if test="remark1 != null" >
+        REMARK1,
+      </if>
+      <if test="remark2 != null" >
+        REMARK2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="eventType != null" >
+        #{eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="eventIntro != null" >
+        #{eventIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDetail != null" >
+        #{eventDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTime != null" >
+        #{eventTime,jdbcType=DATE},
+      </if>
+      <if test="eventPerson != null" >
+        #{eventPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderName != null" >
+        #{leaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.soa.entity.KeyEvent" >
+    update key_event_info
+    <set >
+      <if test="eventType != null" >
+        EVENT_TYPE = #{eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="eventIntro != null" >
+        EVENT_INTRO = #{eventIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDetail != null" >
+        EVENT_DETAIL = #{eventDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTime != null" >
+        EVENT_TIME = #{eventTime,jdbcType=DATE},
+      </if>
+      <if test="eventPerson != null" >
+        EVENT_PERSON = #{eventPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderName != null" >
+        LEADER_NAME = #{leaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        REMARK1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        REMARK2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where E_ID = #{eId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.soa.entity.KeyEvent" >
+    update key_event_info
+    set EVENT_TYPE = #{eventType,jdbcType=VARCHAR},
+      EVENT_INTRO = #{eventIntro,jdbcType=VARCHAR},
+      EVENT_DETAIL = #{eventDetail,jdbcType=VARCHAR},
+      EVENT_TIME = #{eventTime,jdbcType=DATE},
+      EVENT_PERSON = #{eventPerson,jdbcType=VARCHAR},
+      LEADER_NAME = #{leaderName,jdbcType=VARCHAR},
+      REMARK1 = #{remark1,jdbcType=VARCHAR},
+      REMARK2 = #{remark2,jdbcType=VARCHAR}
+    where E_ID = #{eId,jdbcType=INTEGER}
+  </update>
+</mapper>

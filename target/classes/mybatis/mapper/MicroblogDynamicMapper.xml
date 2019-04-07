@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.soa.dao.MicroblogDynamicMapper" >
+  <resultMap id="BaseResultMap" type="cn.soa.entity.MicroblogDynamic" >
+    <id column="D_ID" property="dId" jdbcType="INTEGER" />
+    <result column="MIRCOBLOG_NUM" property="mircoblogNum" jdbcType="VARCHAR" />
+    <result column="MIRCOBLOG_CONTENT" property="mircoblogContent" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK1" property="remark1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    D_ID, MIRCOBLOG_NUM, MIRCOBLOG_CONTENT, CREAT_TIME, REMARK1
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from person_microblog_dynamic
+    where D_ID = #{dId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from person_microblog_dynamic
+    where D_ID = #{dId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.soa.entity.MicroblogDynamic" >
+    insert into person_microblog_dynamic (D_ID, MIRCOBLOG_NUM, MIRCOBLOG_CONTENT, 
+      CREAT_TIME, REMARK1)
+    values (#{dId,jdbcType=INTEGER}, #{mircoblogNum,jdbcType=VARCHAR}, #{mircoblogContent,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=TIMESTAMP}, #{remark1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.soa.entity.MicroblogDynamic" >
+    insert into person_microblog_dynamic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        D_ID,
+      </if>
+      <if test="mircoblogNum != null" >
+        MIRCOBLOG_NUM,
+      </if>
+      <if test="mircoblogContent != null" >
+        MIRCOBLOG_CONTENT,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="remark1 != null" >
+        REMARK1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="mircoblogNum != null" >
+        #{mircoblogNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mircoblogContent != null" >
+        #{mircoblogContent,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.soa.entity.MicroblogDynamic" >
+    update person_microblog_dynamic
+    <set >
+      <if test="mircoblogNum != null" >
+        MIRCOBLOG_NUM = #{mircoblogNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mircoblogContent != null" >
+        MIRCOBLOG_CONTENT = #{mircoblogContent,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark1 != null" >
+        REMARK1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where D_ID = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.soa.entity.MicroblogDynamic" >
+    update person_microblog_dynamic
+    set MIRCOBLOG_NUM = #{mircoblogNum,jdbcType=VARCHAR},
+      MIRCOBLOG_CONTENT = #{mircoblogContent,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      REMARK1 = #{remark1,jdbcType=VARCHAR}
+    where D_ID = #{dId,jdbcType=INTEGER}
+  </update>
+</mapper>

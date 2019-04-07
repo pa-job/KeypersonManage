@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.soa.dao.KeyPersonMapper" >
+  <resultMap id="BaseResultMap" type="cn.soa.entity.KeyPerson" >
+    <id column="KEY_ID" property="keyId" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="USER_NUM" property="userNum" jdbcType="INTEGER" />
+    <result column="MIRCOBLOG_NUM" property="mircoblogNum" jdbcType="VARCHAR" />
+    <result column="POLICE_NAME" property="policeName" jdbcType="VARCHAR" />
+    <result column="RELATION" property="relation" jdbcType="INTEGER" />
+    <result column="R_ID" property="rId" jdbcType="INTEGER" />
+    <result column="MARK" property="mark" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    KEY_ID, NAME, USER_NUM, MIRCOBLOG_NUM, POLICE_NAME, RELATION, R_ID, MARK
+  </sql>
+  <select id="selectByConditions" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from key_person_info
+    <where>			
+    	<if test ="record!=null">
+  				<if test='record.name!=null'>
+    		 and  name like concat('%', #{record.name}, '%')
+    			</if>
+    			<if test='record.mircoblogNum!=null'>
+    		and MIRCOBLOG_NUM like concat('%', #{record.mircoblogNum}, '%')
+    			</if>
+    			<if test='record.policeName!=null'>
+    		and POLICE_NAME like concat('%', #{record.policeName}, '%')
+    			</if>
+    	 </if>
+    </where>
+    	<if test="pageSize!=-1">
+			limit #{page}  ,#{pageSize}
+		</if>
+  </select>
+  <select id="counts"  parameterType="cn.soa.entity.KeyPerson" resultType="int">
+  		select count(*) from  key_person_info
+  		<where>
+  			<if test ="record!=null">
+  				<if test='record.name!=null'>
+    		 and  name like concat('%', #{record.name}, '%')
+    			</if>
+    			<if test='record.mircoblogNum!=null'>
+    		and MIRCOBLOG_NUM like concat('%', #{record.mircoblogNum}, '%')
+    			</if>
+    			<if test='record.policeName!=null'>
+    		and POLICE_NAME like concat('%', #{record.policeName}, '%')
+    			</if>
+  			</if>
+  		</where>
+  </select>
+  <delete id="deleteByPrimaryKeys"  >
+    delete from key_person_info where key_Id  in
+   	 <foreach collection="lists" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+      </foreach>
+  </delete>
+  <insert id="insert" parameterType="cn.soa.entity.KeyPerson" >
+    insert into key_person_info (KEY_ID, NAME, USER_NUM, 
+      MIRCOBLOG_NUM, POLICE_NAME, RELATION, 
+      R_ID, MARK)
+    values (#{keyId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userNum,jdbcType=INTEGER}, 
+      #{mircoblogNum,jdbcType=VARCHAR}, #{policeName,jdbcType=VARCHAR}, #{relation,jdbcType=INTEGER}, 
+      #{rId,jdbcType=INTEGER}, #{mark,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.soa.entity.KeyPerson" >
+    update key_person_info
+    set NAME = #{name,jdbcType=VARCHAR},
+      USER_NUM = #{userNum,jdbcType=INTEGER},
+      MIRCOBLOG_NUM = #{mircoblogNum,jdbcType=VARCHAR},
+      POLICE_NAME = #{policeName,jdbcType=VARCHAR},
+      RELATION = #{relation,jdbcType=INTEGER},
+      R_ID = #{rId,jdbcType=INTEGER},
+      MARK = #{mark,jdbcType=INTEGER}
+    where KEY_ID = #{keyId,jdbcType=INTEGER}
+  </update>
+</mapper>
