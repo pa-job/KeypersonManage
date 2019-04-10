@@ -103,18 +103,19 @@ public class BlogSI implements BlogS{
 					logger.debug("---S-----startPullBlogS---------" + blogContents );
 					logger.debug("---S-----startPullBlogS---------" + blogs );
 					if( blogContents == null || blogContents.isEmpty() ) {
-						for( String s : blogs ) {
-							MicroblogDynamic newBlog = new MicroblogDynamic();
-							newBlog.setMircoblogNum( k.getMircoblogNum() );
-							newBlog.setMircoblogContent( filterEmoji1( s ) );
-							newBlog.setRemark1( k.getName() );
-							try {
-								int i = blogMapper.insertSelective( newBlog );
-								if( i > 0 ) newBlogs.add( newBlog );
-							} catch (Exception e) {
-								e.printStackTrace();
-							}						
-							
+						if( blogs != null  ) {
+							for( String s : blogs ) {
+								MicroblogDynamic newBlog = new MicroblogDynamic();
+								newBlog.setMircoblogNum( k.getMircoblogNum() );
+								newBlog.setMircoblogContent( filterEmoji1( s ) );
+								newBlog.setRemark1( k.getName() );
+								try {
+									int i = blogMapper.insertSelective( newBlog );
+									if( i > 0 ) newBlogs.add( newBlog );
+								} catch (Exception e) {
+									e.printStackTrace();
+								}													
+							}
 						}
 					}else {
 						if( blogs != null  ) {

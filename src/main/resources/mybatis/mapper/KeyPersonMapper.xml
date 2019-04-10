@@ -53,7 +53,7 @@
   </select>
   <select id="selectByMark" resultMap="BaseResultMap">
   	select * from key_person_info
-	where MARK = 1
+	where mark = 0
   </select>
   <delete id="deleteByPrimaryKeys"  >
     delete from key_person_info where key_Id  in
