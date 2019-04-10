@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.soa.dao.SystemConfigMapper">
+	<select id="selectById" resultType="cn.soa.entity.SystemConfig">
+		select * from systemconfig
+		where SID=#{param1}
+	</select>
+	
+	<insert id="insert" parameterType="cn.soa.entity.SystemConfig" >
+    insert into systemconfig
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="sname != null" >
+        sname,
+      </if>
+      <if test="scontent != null" >
+        scontent,
+      </if>
+      <if test="stime != null" >
+        stime,
+      </if>
+      <if test="remark1 != null" >
+        REMARK1,
+      </if>
+       <if test="remark2 != null" >
+        REMARK2
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="scontent != null" >
+        #{scontent,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        #{stime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+       <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <delete id="delete">
+		delete from systemconfig
+	</delete>
+</mapper>
+ 
+

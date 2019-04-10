@@ -21,14 +21,5 @@ public class KeypersonManageApplication extends SpringBootServletInitializer{
 	        // 注意这里要指向原先用main方法执行的Application启动类
 	        return builder.sources(KeypersonManageApplication.class); 
 	 }
-	  @Bean
-	   public MultipartConfigElement multipartConfigElement() {
-	      MultipartConfigFactory factory = new MultipartConfigFactory();
-	      //单个文件最大
-	      factory.setMaxFileSize("300MB"); //KB,MB
-	      /// 设置总上传数据总大小
-	      factory.setMaxRequestSize("300MB");
-	      return factory.createMultipartConfig();
-	   }
 }
 

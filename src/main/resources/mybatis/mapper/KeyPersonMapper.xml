@@ -51,6 +51,10 @@
   			</if>
   		</where>
   </select>
+  <select id="selectByMark" resultMap="BaseResultMap">
+  	select * from key_person_info
+	where MARK = 1
+  </select>
   <delete id="deleteByPrimaryKeys"  >
     delete from key_person_info where key_Id  in
    	 <foreach collection="lists" item="item" index="index" open="(" close=")" separator=",">

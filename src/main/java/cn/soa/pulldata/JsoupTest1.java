@@ -43,30 +43,30 @@ public class JsoupTest1 {
 //	}
 	public static void main(String[] args) throws IOException {  
         Map<String, String> map = new HashMap<>();  
-        map.put("Cookie","SINAGLOBAL=4699324671137.901.1544972775797; UM_distinctid=1688a0243ab59a-0c9382d6bf7d24-594d2a16-100200-1688a0243ae2fa; YF-V5-G0=73b58b9e32dedf309da5103c77c3af4f; _s_tentry=www.ichartjs.cn; Apache=107149619925.75044.1554306713830; ULV=1554306713857:1:1:1:107149619925.75044.1554306713830:; login_sid_t=2d562fc19f15bb8d07d95f70aac1c6a3; cross_origin_proto=SSL; Ugrow-G0=169004153682ef91866609488943c77f; TC-V5-G0=0cd4658437f38175b9211f1336161d7d; appkey=; WBtopGlobal_register_version=edef3632d17f5fb3; un=15123395154; httpsupgrade_ab=SSL; TC-Page-G0=c427b4f7dad4c026ba2b0431d93d839e|1554371623|1554371621; wb_view_log_5195741723=1366*7681; UOR=,,login.sina.com.cn; wb_view_log=1366*7681; WBStorage=201904051637|undefined; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9Wh96D2N7cZBzk.2Pgihf09f5JpX5K2hUgL.Fo-p1K-NSh2Neoe2dJLoI0qLxKML1-zLBonLxKML1h.L1hMLxKBLBonLB-BLxKML1-2L1hBLxKBLBonL1KqLxKML1K-L12et; SUHB=0OMkD6ZVeFq4wD; ALF=1585989483; SSOLoginState=1554453484; SCF=AjrR03KQDEArNkyGjSjAA_61dp72Hano129rRSj_XXQtyWrgRGkC2TX_T2X9ST2thSONsI7M-5cQzdntjbxNuIg.; SUB=_2A25xo2O9DeRhGeNP4lcW9C_LyT-IHXVS2dJ1rDV8PUNbmtAKLUL1kW9NTkbuAmh7EdHfzgLLuAKZl116BQNDFQ61; wvr=6; wb_timefeed_5195741723=1; YF-Page-G0=35ff6d315d1a536c0891f71721feb16e|1554453546|1554453491; webim_unReadCount=%7B%22time%22%3A1554453652694%2C%22dm_pub_total%22%3A3%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A27%2C%22msgbox%22%3A2%7D");
+        map.put("Cookie","SINAGLOBAL=4699324671137.901.1544972775797; UM_distinctid=1688a0243ab59a-0c9382d6bf7d24-594d2a16-100200-1688a0243ae2fa; YF-V5-G0=73b58b9e32dedf309da5103c77c3af4f; _s_tentry=www.ichartjs.cn; Apache=107149619925.75044.1554306713830; ULV=1554306713857:1:1:1:107149619925.75044.1554306713830:; login_sid_t=2d562fc19f15bb8d07d95f70aac1c6a3; cross_origin_proto=SSL; Ugrow-G0=169004153682ef91866609488943c77f; TC-V5-G0=0cd4658437f38175b9211f1336161d7d; appkey=; WBtopGlobal_register_version=edef3632d17f5fb3; un=15123395154; httpsupgrade_ab=SSL; SSOLoginState=1554453484; wvr=6; wb_timefeed_5195741723=1; YF-Page-G0=3d0866500b190395de868745b0875841|1554466651|1554466577; WBStorage=201904081457|undefined; wb_view_log=1366*7681; UOR=,,www.baidu.com; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9Wh96D2N7cZBzk.2Pgihf09f5JpX5K2hUgL.Fo-p1K-NSh2Neoe2dJLoI0qLxKML1-zLBonLxKML1h.L1hMLxKBLBonLB-BLxKML1-2L1hBLxKBLBonL1KqLxKML1K-L12et; ALF=1586242702; SCF=AjrR03KQDEArNkyGjSjAA_61dp72Hano129rRSj_XXQtgglCRwQp_nSP1dVM6t8vL9OwU_B948pe9fi7_1_OAE0.; SUB=_2A25xroFfDeRhGeNP4lcW9C_LyT-IHXVS3fWXrDV8PUNbmtAKLVblkW9NTkbuAoQYs0-kWu5yPkNkL5d0IW20SqkB; SUHB=0G0unp93zz9Exr; wb_view_log_5195741723=1366*7681; TC-Page-G0=7a922a70806a77294c00d51d22d0a6b7|1554706708|1554706708; webim_unReadCount=%7B%22time%22%3A1554706808296%2C%22dm_pub_total%22%3A4%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A27%2C%22msgbox%22%3A2%7D");
         //map.put请根据自己的微博cookie得到  
   
         Response res = Jsoup.connect("http://weibo.com/u/6386087847")  
                 .cookies(map).method(Method.GET).execute();  
         String s = res.body();  
-//        System.out.println(s);  
         String[] ss = s.split("<script>FM.view");  
         int i = 0;  
-        List<String> list = new ArrayList<>();  
+        List<String> list = new ArrayList<>();        
         for (String x : ss) {   
+        	 System.out.println("-------y------");  
+             System.out.println(x);
         	if(i == 28) {
-             	System.out.println(x);  
              	 if (x.contains("\"html\":\"")) {           	 
                      String value = getHtml(x);  
-//                     System.out.println(value);  
                      Document doc = Jsoup.parse(value);
                      list.add(value);     
                      int k = 1;
                      Elements links = doc.getElementsByAttributeValue("node-type", "feed_list_content");
-                     System.out.println("links" + links);
                      for (Element link : links) {
                          try {
-                        	 
+                        	 String content = link.text();
+                        	 System.out.println("------------content-------------"); 
+                        	 System.out.println(content); 
                          } catch (NullPointerException e) {
                              continue;
                          }

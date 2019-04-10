@@ -1,5 +1,8 @@
 package cn.soa.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import cn.soa.entity.MicroblogDynamic;
@@ -16,4 +19,10 @@ public interface MicroblogDynamicMapper {
     int updateByPrimaryKeySelective(MicroblogDynamic record);
 
     int updateByPrimaryKey(MicroblogDynamic record);
+    
+    ArrayList<MicroblogDynamic> selectAll();
+    
+    ArrayList<MicroblogDynamic> selectByNum( String num );
+    
+    
 }

@@ -8,7 +8,7 @@
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
 		<div class="layui-header">
-	    	<div class="layui-logo" style="font-size:24px">设备管理系统</div>
+	    	<div class="layui-logo" style="font-size:24px">重点人员管理系统</div>
 	    	<!-- 头部区域（可配合layui已有的水平导航） -->
 	    	<ul class="layui-nav layui-layout-left" id="firstMeno">
 	    		
@@ -23,7 +23,7 @@
 			          	<dd><a href="">安全设置</a></dd>·
 			        </dl> -->
 		      	</li>
-				<li class="layui-nav-item" id="logout"><a href="login.html">退出登录</a></li>
+				<!-- <li class="layui-nav-item" id="logout"><a href="login.html">退出登录</a></li>  -->
 		    </ul>
 		</div>
 	  
@@ -46,17 +46,71 @@
 	  
 		<div class="layui-body" id="indexContent">
 	    	<!-- 内容主体区域 -->
-	    	<iframe style="padding: 2px;width:100%;height:100%;" scrolling="no" src='keyPepole.html' id="ifra">内容主体区域……</iframe>
+	    	<iframe style="padding: 2px;width:100%;height:100%;" scrolling="yes" src='keyPepole.html' id="ifra">内容主体区域……</iframe>
 		</div>
 	</div>
 	<script src="../../frameJs/layui-v2.4.5/layui.all.js" ></script>
 	<script src="../../frameJs/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+	<script src="../../jsPackage/own/universal.js" type="text/javascript"></script> 
 	<script type="text/javascript">
 		$(function(){
 			$('.layui-side-scroll li').click(function(){
-				var arr={'index1':'keyPepole.html','index2':'keyEvent.html','index3':''};
+				var arr={'index1':'keyPepole.html','index2':'keyEvent.html','index3':'blogManager.html'};
 				$('#indexContent>iframe').attr('src',arr[this.id]);
 			});
+			
+			//检查cookie是否更新
+			var url = "../../blog/system"
+			,startUrl = "../../blog/start"
+			,i = 1;
+			$.ajax({
+			     type : "GET",
+			     url : url,
+			     data : {},
+			     cache : true,
+			     contentType : "application/x-www-form-urlencoded",
+			     dataType : "json",
+			     success : function( jsonData ){
+			    	 var y = new Date().getFullYear();
+					var m = new Date().getMonth() + 1;				
+					var d = new Date().getDate();
+					var time = y + "-" + m  + "-" + d;
+					console.log( '----------当前时间----------' );
+					console.log(time);
+					var data = jsonData.data;
+					if( jsonData.state == 0 && data ){
+						console.log(data.stime);
+						if( data.stime == time ){							
+						}else{
+							layer.alert( '需要更新cookie,才能抓数据', {icon:3});
+						}
+					}else{
+						layer.msg( '请求失败', {icon:3});
+					}	
+			     },
+			     error:function(){
+			    	 layer.msg('请求失败：');
+			     }		       
+			});
+			
+			
+			setInterval(function(){
+				ajax( 'post', startUrl, {},function(data){					
+					console.log( '-------微博监听--------' );				
+					if( data && data.length > 0 ){
+						var personName = [];
+						$.each( data,function( index, item){
+							if( personName.indexOf( item.remark1 ) == '-1' ){
+								personName.push( item.remark1 );
+							}							
+						} )
+						var names = personName.join(',');
+						console.log( '新微博人名：' + names );		
+						layer.msg( names + '发布了新微博', {icon:1});
+						console.log( data );
+					}
+				});
+			},10*1000);
 		})
 	</script> 
 </body>

@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.soa.dao.UserRoleMapper;
-import cn.soa.entity.IotUserModuleResource;
 import cn.soa.entity.UserOrganization;
 import cn.soa.entity.UserRole;
 import cn.soa.entity.UserRoleRelation;
@@ -54,27 +53,7 @@ public class RoleService implements RoleServiceInter{
 		return userRoles;
 	}	
 	
-	
-	/**   
-	 * @Title: findAuthJsonServ   
-	 * @Description:  根据用户角色id查询用户具有的权限    
-	 * @return: ArrayList<IotUserModuleResource>        
-	 */  
-	@Override
-	public ArrayList<IotUserModuleResource> findAuthJsonServ( String rolid){
-		/*
-		 * 查询权限
-		 */
-		ArrayList<IotUserModuleResource> auths = null;
-		try {
-			auths = userRoleMapper.findAuthByRolid(rolid);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.debug("--------根据用户角色id查询用户具有的权限  findAuthJsonServ--------出错");
-			return null;
-		}
-		return auths;
-	}
+
 
 	
 	

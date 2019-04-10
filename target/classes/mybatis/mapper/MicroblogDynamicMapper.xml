@@ -17,6 +17,18 @@
     from person_microblog_dynamic
     where D_ID = #{dId,jdbcType=INTEGER}
   </select>
+  <select id="selectAll" resultType="cn.soa.entity.MicroblogDynamic" >
+	select d.D_ID as dId,d.MIRCOBLOG_NUM as mircoblogNum,
+	d.MIRCOBLOG_CONTENT as mircoblogContent,d.CREAT_TIME as creatTime,
+	i.`NAME` as remark1
+	from person_microblog_dynamic d LEFT JOIN key_person_info i on d.MIRCOBLOG_NUM = i.MIRCOBLOG_NUM
+	order by d.MIRCOBLOG_NUM,d.CREAT_TIME	
+  </select>
+  <select id="selectByNum" parameterType="string" resultType="cn.soa.entity.MicroblogDynamic">
+  	select * from person_microblog_dynamic
+  	where MIRCOBLOG_NUM=#{arg1}
+  	order by CREAT_TIME
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from person_microblog_dynamic
     where D_ID = #{dId,jdbcType=INTEGER}

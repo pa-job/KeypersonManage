@@ -17,4 +17,6 @@ public interface KeyPersonMapper {
     int counts(@Param("record")KeyPerson record);
     
     int updateByPrimaryKey(KeyPerson record);
+    
+    List<KeyPerson> selectByMark();
 }
