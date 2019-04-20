@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.soa.entity.KeyEvent;
+import cn.soa.entity.KeyPerson;
 import cn.soa.entity.ResultJson;
 import cn.soa.entity.UserTableJson;
 import cn.soa.service.inter.KeyEventInter;
@@ -27,6 +28,10 @@ public class KeyEventController {
 	@RequestMapping("/deleteByPrimaryKeys")
 	public ResultJson<Integer>  deleteByPrimaryKeys(@RequestParam("list[]")List<Integer> eIds){
 		return new ResultJson(KeyEventService.deleteByPrimaryKeys(eIds));
+	}
+	@RequestMapping("/checkEventCount")
+	public ResultJson<Integer>  checkEvent(KeyEvent record){
+		return new ResultJson(KeyEventService.counts(record));
 	}
 	@RequestMapping("/addOrUpdateEvent")
 	public ResultJson<Integer> addOrUpdatePepole(KeyEvent record){

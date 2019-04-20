@@ -22,7 +22,7 @@ public class KeyPerson {
 
     private Integer relation;
 
-    private Integer rId;
+    private String rId;
 
     private Integer mark;
 

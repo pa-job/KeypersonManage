@@ -20,10 +20,16 @@ public class KeyPeopleController {
 	private  KeyPersonInter KeyPersonDaoService;
 	@RequestMapping("/selectByConditions")
 	public UserTableJson selectByConditions(KeyPerson record,@RequestParam(value="page",required=false) Integer page,@RequestParam(value="limit",required=false) Integer pageSize) {
+		if(pageSize==null &&page==null) {
+			pageSize=-1;
+			page=-1;
+		};
 		int count=KeyPersonDaoService.counts(record);
 		List<KeyPerson> list=KeyPersonDaoService.selectByConditions(record, (page-1)*pageSize, pageSize);
+		System.out.println("ist:"+list);
 		return new UserTableJson("",0,"",list,count,true) ;
 	}
+
 	@RequestMapping("/deleteByPrimaryKeys")
 	public ResultJson<Integer>  deleteByPrimaryKeys(@RequestParam("list[]")List<Integer> keyIds){
 		return new ResultJson(KeyPersonDaoService.deleteByPrimaryKeys(keyIds));

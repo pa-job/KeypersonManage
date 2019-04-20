@@ -8,7 +8,7 @@
     <result column="MIRCOBLOG_NUM" property="mircoblogNum" jdbcType="VARCHAR" />
     <result column="POLICE_NAME" property="policeName" jdbcType="VARCHAR" />
     <result column="RELATION" property="relation" jdbcType="INTEGER" />
-    <result column="R_ID" property="rId" jdbcType="INTEGER" />
+    <result column="R_ID" property="rId" jdbcType="VARCHAR" />
     <result column="MARK" property="mark" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -21,13 +21,16 @@
     <where>			
     	<if test ="record!=null">
   				<if test='record.name!=null'>
-    		 and  name like concat('%', #{record.name}, '%')
+    		and  name = #{record.name}  or  R_ID=#{record.name}
     			</if>
     			<if test='record.mircoblogNum!=null'>
     		and MIRCOBLOG_NUM like concat('%', #{record.mircoblogNum}, '%')
     			</if>
     			<if test='record.policeName!=null'>
     		and POLICE_NAME like concat('%', #{record.policeName}, '%')
+    			</if>
+    			<if test='record.mark!=null'>
+    		and MARK=#{record.mark}
     			</if>
     	 </if>
     </where>
@@ -40,13 +43,16 @@
   		<where>
   			<if test ="record!=null">
   				<if test='record.name!=null'>
-    		 and  name like concat('%', #{record.name}, '%')
+    		 and  name = #{record.name}  or  R_ID=#{record.name}
     			</if>
     			<if test='record.mircoblogNum!=null'>
     		and MIRCOBLOG_NUM like concat('%', #{record.mircoblogNum}, '%')
     			</if>
     			<if test='record.policeName!=null'>
     		and POLICE_NAME like concat('%', #{record.policeName}, '%')
+    			</if>
+    			<if test='record.mark!=null'>
+    		and MARK=#{record.mark}
     			</if>
   			</if>
   		</where>
@@ -67,7 +73,7 @@
       R_ID, MARK)
     values (#{keyId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userNum,jdbcType=INTEGER}, 
       #{mircoblogNum,jdbcType=VARCHAR}, #{policeName,jdbcType=VARCHAR}, #{relation,jdbcType=INTEGER}, 
-      #{rId,jdbcType=INTEGER}, #{mark,jdbcType=INTEGER})
+      #{rId,jdbcType=VARCHAR}, #{mark,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.soa.entity.KeyPerson" >
     update key_person_info
@@ -76,7 +82,7 @@
       MIRCOBLOG_NUM = #{mircoblogNum,jdbcType=VARCHAR},
       POLICE_NAME = #{policeName,jdbcType=VARCHAR},
       RELATION = #{relation,jdbcType=INTEGER},
-      R_ID = #{rId,jdbcType=INTEGER},
+      R_ID = #{rId,jdbcType=VARCHAR},
       MARK = #{mark,jdbcType=INTEGER}
     where KEY_ID = #{keyId,jdbcType=INTEGER}
   </update>

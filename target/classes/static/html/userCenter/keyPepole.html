@@ -17,7 +17,7 @@
 			<div class="layui-form-item select_item">
 				<div class="layui-input-inline">
 					<input type="text" name="name" class="layui-input "
-						placeholder="人员姓名">
+						placeholder="相关人员查询">
 				</div>
 			</div>
 			<div class="layui-form-item select_item">
@@ -74,25 +74,33 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
+					<label class="layui-form-label">人员分类</label>
+					<div class="layui-input-block">
+						<select name="mark" lay-verify="required" lay-filter="mark">
+							<option value="">请选择</option>
+							<option value="0">重点人员本人</option>
+							<option value="1">重点人员亲属</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item totgl" style="display:none" >
+					<label class="layui-form-label">重点人员</label>
+					<div class="layui-input-block">
+						<select name="rId"  id="rId">
+							<option value="">选择相关的重点人员</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item totgl" style="display:none" >
 					<label class="layui-form-label">亲属关系</label>
 					<div class="layui-input-block">
-						<select name="relation" lay-verify="required">
+						<select name="relation" >
 							<option value="">选择亲属关系</option>
 							<option value="-1">本人</option>
 							<option value="0">父亲</option>
 							<option value="1">母亲</option>
 							<option value="2">兄妹</option>
 							<option value="3">其他</option>
-						</select>
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">人员分类</label>
-					<div class="layui-input-block">
-						<select name="mark" lay-verify="required">
-							<option value="">请选择</option>
-							<option value="0">重点人员</option>
-							<option value="1">重点人员亲属</option>
 						</select>
 					</div>
 				</div>
@@ -106,6 +114,19 @@
 			</form>
 		</div>
 	</div>
+			<script type="text/html" id="equState">
+	{{#  if(d.relation ==-1){ }}
+    <span style="color: #C6EC50;">{{ '重点人员本人' }}</span>
+  {{#  }  else if(d.relation ==0) { }}
+    <span style="color: #F581B1;">{{ '重点人员父亲' }}</span>
+   {{#  } else if(d.relation ==1) { }}
+	 <span style="color: #F581B1;">{{ '重点人员母亲' }}</span>
+ {{#  } else if(d.relation ==2) { }}
+ <span style="color: #F581B1;">{{ '重点人员兄妹' }}</span>
+{{#  } else if(d.relation ==3) { }}
+<span style="color: #F581B1;">{{ '重点人员其他亲属' }}</span>
+ {{#  }}}
+	</script>
 	<script src="../../frameJs/layui-v2.4.5/layui.all.js"></script>
 	<script src="../../frameJs/jquery-3.3.1/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
@@ -126,11 +147,29 @@
 			      ,{field: 'name', title: '人员姓名'}
 			      ,{field: 'mircoblogNum', title: '微博账号'}
 			      ,{field: 'policeName', title: '所属派出所'}
-			      ,{field: 'relation', title: '所属亲属关系'} 
-			      ,{field: 'rId', title: '重点人员id'}
-			      ,{field: 'mark', title: '备注信息'}
+			      ,{field: 'relation', title: '所属关系',templet : '#equState'} 
+			    
 			    ]]
 			  });
+		 //动态筛选出重点人员
+		 $.getJSON('/KeypersonManage/KeyPerson/selectByConditions',{mark:0},function(res){
+			if(res.code==0&&res.data.length>0){
+				var html="";
+				$.each(res.data,function(i,item){
+					html+='<option value="'+item.name+'">'+item.name+'</option>'
+				});
+				console.log(html);
+				$('#rId').append(html);
+			}
+		 })
+		 //舰艇下拉选动太现实
+		 form.on('select(mark)',function(data){
+			if( data.value==1){
+				$('.totgl').show();
+			}else{
+				$('.totgl').hide();
+			}
+		 })
 		 //弹出框基本 
 		 var layerAction={
 				 openLayer:function(){
@@ -138,7 +177,7 @@
 				        	closeBtn : 0,
 				        	type:1,
 				        	title:'人员管理',
-				        	area:['500px','460px'],
+				        	area:['500px','600px'],
 				        	content:$('#popUpdateTest')
 				        });
 				 },
@@ -146,6 +185,7 @@
 					 layer.closeAll();
 				 }
 		 }
+	
 		 //监听工具事件
 		table.on('toolbar(test)', function(obj){
 		    var checkStatus = table.checkStatus(obj.config.id)
